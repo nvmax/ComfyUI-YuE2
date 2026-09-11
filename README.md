@@ -162,3 +162,13 @@ ComfyUI/
    `Quick Song Starters` ➔ `Song Generator` (with persistent VRAM cache) ➔ `Audio Saver & Preview` (MP3 320k). Instant 1-click test.
 2. **`example_workflows/02_yue2_full_producer_studio_workflow.json`**:
    `Style and Lyrics Studio` + `LLM Co-Producer` (grouped with `Fast Groups Bypasser`) ➔ `Style & Lyrics Switch / Merger` (`Any Switch`) with two `CR Text` direct manual override boxes ➔ `Song Generator` (with Seed Generator) ➔ `Audio Saver & Preview` + `Unload Model / Free VRAM`. Allows seamless 1-click toggling between Studio AI mode and direct manual prompt/lyrics entry without any cable rewiring!
+
+---
+
+### ☕ Support the Developer
+If you find this node useful and want to help support its continued development, consider buying the dev a coffee!
+
+[![Buy Me A Coffee](https://img.shields.io/badge/Donate-PayPal-blue.svg?style=for-the-badge&logo=paypal)](https://paypal.me/nvmaxx)
+
+*Built with ❤️ for the ComfyUI Community.*
+
