@@ -1,0 +1,24 @@
+# Cache and bytecode
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Git and CI
+.git/
+.github/
+.gitignore
+
+# IDE and Editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+
+# Build artifacts and archives
+*.zip
+*.tar.gz
+dist/
+build/
+*.egg-info/
