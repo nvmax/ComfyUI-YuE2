@@ -1,0 +1,910 @@
+{
+  "id": "3e5e7fee-c16a-4714-863c-1cb31df75302",
+  "revision": 0,
+  "last_node_id": 15,
+  "last_link_id": 12,
+  "nodes": [
+    {
+      "id": 4,
+      "type": "YuE2Seed",
+      "pos": [
+        912.4324188745408,
+        363.6162509010717
+      ],
+      "size": [
+        238.078125,
+        105.9375
+      ],
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "seed",
+          "type": "INT",
+          "links": [
+            4
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "YuE2Seed",
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "version": "7.8",
+          "input_ue_unconnectable": {}
+        }
+      },
+      "widgets_values": [
+        702965739866285,
+        "randomize"
+      ],
+      "widgets_values_named": {
+        "seed": 702965739866285,
+        "control_after_generate": "randomize"
+      }
+    },
+    {
+      "id": 6,
+      "type": "YuE2AudioSavePreview",
+      "pos": [
+        1678.970760983414,
+        72.22794848887165
+      ],
+      "size": [
+        483.109375,
+        377.671875
+      ],
+      "flags": {},
+      "order": 11,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "audio",
+          "type": "AUDIO",
+          "link": 5
+        }
+      ],
+      "outputs": [
+        {
+          "name": "audio",
+          "type": "AUDIO",
+          "links": null
+        },
+        {
+          "name": "file_path",
+          "type": "STRING",
+          "links": null
+        },
+        {
+          "name": "duration_seconds",
+          "type": "FLOAT",
+          "links": null
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "YuE2AudioSavePreview",
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "version": "7.8",
+          "input_ue_unconnectable": {}
+        }
+      },
+      "widgets_values": [
+        "YuE2/studio_song",
+        "Save to Output",
+        "mp3",
+        "320k",
+        "PCM_24"
+      ],
+      "widgets_values_named": {
+        "filename_prefix": "YuE2/studio_song",
+        "save_mode": "Save to Output",
+        "format": "mp3",
+        "mp3_bitrate": "320k",
+        "bit_depth": "PCM_24"
+      }
+    },
+    {
+      "id": 10,
+      "type": "CR Text",
+      "pos": [
+        80,
+        -220
+      ],
+      "size": [
+        379.734375,
+        239.734375
+      ],
+      "flags": {},
+      "order": 1,
+      "mode": 4,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "text",
+          "type": "*",
+          "links": [
+            7
+          ]
+        },
+        {
+          "name": "show_help",
+          "type": "STRING",
+          "links": null
+        }
+      ],
+      "title": "Direct Style Prompt (Manual Override)",
+      "properties": {
+        "Node name for S&R": "CR Text",
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "version": "7.8",
+          "input_ue_unconnectable": {}
+        }
+      },
+      "widgets_values": [
+        "Emotional Alt-Pop, 2026 Production, Cinematic Piano, Raw Powerful Vocals, Explosive Anthemic Chorus, High Dynamic Range"
+      ],
+      "widgets_values_named": {
+        "text": "Emotional Alt-Pop, 2026 Production, Cinematic Piano, Raw Powerful Vocals, Explosive Anthemic Chorus, High Dynamic Range"
+      },
+      "color": "#3a2a1d",
+      "bgcolor": "#271b12"
+    },
+    {
+      "id": 11,
+      "type": "CR Text",
+      "pos": [
+        500,
+        -220
+      ],
+      "size": [
+        379.734375,
+        239.734375
+      ],
+      "flags": {},
+      "order": 2,
+      "mode": 4,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "text",
+          "type": "*",
+          "links": [
+            8
+          ]
+        },
+        {
+          "name": "show_help",
+          "type": "STRING",
+          "links": null
+        }
+      ],
+      "title": "Direct Lyrics Input (Manual Override)",
+      "properties": {
+        "Node name for S&R": "CR Text",
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "version": "7.8",
+          "input_ue_unconnectable": {}
+        }
+      },
+      "widgets_values": [
+        "[Hook]\nI’m slowing it down for the one that I love\nLike the earth’s standing still while the stars crash above\n\n[Verse 1]\n[Soft piano only] [Intimate vocal]\nThe clock on the wall is a liar tonight\nSpinning too fast while we chase the light\nI’m holding your hand like a lifeline in June\nThe only thing quiet in a world out of tune\n\n[Chorus]\n[Chorus | Energy: Maximum] [Explosive vocal delivery] [Full band burst]\nOh, I’m slowing it down for the one that I love!\nLike the earth’s standing still while the stars crash above!\nIt’s a beautiful weight, it’s a terrifying grace\nI’m finally home in the light of your grace!\n(In your grace)\n\n[Verse 2]\n[Drums settle into a driving backbeat]\nWe used to be shadows just passing through doors\nBut I’m not a ghost on these hardwood floors\nEvery bridge that I burned was a lesson I learned\nTo wait for the peace that I’ve finally earned\n\n[Chorus]\n[Chorus | Energy: Maximum] [Anthemic energy]\nOh, I’m slowing it down for the one that I love!\nLike the earth’s standing still while the stars crash above!\nIt’s a beautiful weight, it’s a terrifying grace\nI’m finally home in the light of your grace!\n\n[Verse 3]\n[Building intensity] [Gritty piano chords]\nDon't let the sun rise, don't let it go cold\nI’ve found a story that never gets old\nThe seconds are dripping like honey and wine\nI’m finally yours, and I’m glad that you’re mine\n\n[Chorus]\n[Chorus | Energy: Maximum] [Maximum intensity] [Hard hitting drums]\nOh, I’m slowing it down for the one that I love!\nLike the earth’s standing still while the stars crash above!\nIt’s a beautiful weight, it’s a terrifying grace\nI’m finally home in the light of your grace!\n\n[Outro]\n[OUTRO - BIG FINAL HIT + HARD STOP, massive hall reverb tail]\n[Instrumental: Final sustained piano note]\nSlowing it down...\nFor the one I love...\n[Precision Landing: Instrumental: Single piano chord]\n[End]"
+      ],
+      "widgets_values_named": {
+        "text": "[Hook]\nI’m slowing it down for the one that I love\nLike the earth’s standing still while the stars crash above\n\n[Verse 1]\n[Soft piano only] [Intimate vocal]\nThe clock on the wall is a liar tonight\nSpinning too fast while we chase the light\nI’m holding your hand like a lifeline in June\nThe only thing quiet in a world out of tune\n\n[Chorus]\n[Chorus | Energy: Maximum] [Explosive vocal delivery] [Full band burst]\nOh, I’m slowing it down for the one that I love!\nLike the earth’s standing still while the stars crash above!\nIt’s a beautiful weight, it’s a terrifying grace\nI’m finally home in the light of your grace!\n(In your grace)\n\n[Verse 2]\n[Drums settle into a driving backbeat]\nWe used to be shadows just passing through doors\nBut I’m not a ghost on these hardwood floors\nEvery bridge that I burned was a lesson I learned\nTo wait for the peace that I’ve finally earned\n\n[Chorus]\n[Chorus | Energy: Maximum] [Anthemic energy]\nOh, I’m slowing it down for the one that I love!\nLike the earth’s standing still while the stars crash above!\nIt’s a beautiful weight, it’s a terrifying grace\nI’m finally home in the light of your grace!\n\n[Verse 3]\n[Building intensity] [Gritty piano chords]\nDon't let the sun rise, don't let it go cold\nI’ve found a story that never gets old\nThe seconds are dripping like honey and wine\nI’m finally yours, and I’m glad that you’re mine\n\n[Chorus]\n[Chorus | Energy: Maximum] [Maximum intensity] [Hard hitting drums]\nOh, I’m slowing it down for the one that I love!\nLike the earth’s standing still while the stars crash above!\nIt’s a beautiful weight, it’s a terrifying grace\nI’m finally home in the light of your grace!\n\n[Outro]\n[OUTRO - BIG FINAL HIT + HARD STOP, massive hall reverb tail]\n[Instrumental: Final sustained piano note]\nSlowing it down...\nFor the one I love...\n[Precision Landing: Instrumental: Single piano chord]\n[End]"
+      },
+      "color": "#3a2a1d",
+      "bgcolor": "#271b12"
+    },
+    {
+      "id": 12,
+      "type": "Any Switch (rgthree)",
+      "pos": [
+        920,
+        -60
+      ],
+      "size": [
+        224.984375,
+        137.875
+      ],
+      "flags": {},
+      "order": 9,
+      "mode": 0,
+      "inputs": [
+        {
+          "dir": 3,
+          "name": "any_01",
+          "type": "STRING",
+          "link": 6
+        },
+        {
+          "dir": 3,
+          "name": "any_02",
+          "type": "STRING",
+          "link": 7
+        },
+        {
+          "dir": 3,
+          "name": "any_03",
+          "type": "STRING",
+          "link": null
+        },
+        {
+          "dir": 3,
+          "name": "any_04",
+          "type": "STRING",
+          "link": null
+        },
+        {
+          "dir": 3,
+          "name": "any_05",
+          "type": "STRING",
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "dir": 4,
+          "label": "STRING",
+          "name": "*",
+          "type": "STRING",
+          "links": [
+            9
+          ]
+        }
+      ],
+      "title": "Style Switch / Merger",
+      "properties": {
+        "Node name for S&R": "Any Switch (rgthree)",
+        "cnr_id": "rgthree-comfy",
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "version": "7.8",
+          "input_ue_unconnectable": {}
+        }
+      },
+      "color": "#2a445e",
+      "bgcolor": "#1d2f40"
+    },
+    {
+      "id": 13,
+      "type": "Any Switch (rgthree)",
+      "pos": [
+        920.5820994874857,
+        127.8374019980428
+      ],
+      "size": [
+        224.984375,
+        137.875
+      ],
+      "flags": {},
+      "order": 7,
+      "mode": 0,
+      "inputs": [
+        {
+          "dir": 3,
+          "name": "any_01",
+          "type": "STRING",
+          "link": 3
+        },
+        {
+          "dir": 3,
+          "name": "any_02",
+          "type": "STRING",
+          "link": 8
+        },
+        {
+          "dir": 3,
+          "name": "any_03",
+          "type": "STRING",
+          "link": null
+        },
+        {
+          "dir": 3,
+          "name": "any_04",
+          "type": "STRING",
+          "link": null
+        },
+        {
+          "dir": 3,
+          "name": "any_05",
+          "type": "STRING",
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "dir": 4,
+          "label": "STRING",
+          "name": "*",
+          "type": "STRING",
+          "links": [
+            10
+          ]
+        }
+      ],
+      "title": "Lyrics Switch / Merger",
+      "properties": {
+        "Node name for S&R": "Any Switch (rgthree)",
+        "cnr_id": "rgthree-comfy",
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "version": "7.8",
+          "input_ue_unconnectable": {}
+        }
+      },
+      "color": "#2a445e",
+      "bgcolor": "#1d2f40"
+    },
+    {
+      "id": 9,
+      "type": "Fast Groups Bypasser (rgthree)",
+      "pos": [
+        70.10406888928867,
+        -406.1951244601835
+      ],
+      "size": [
+        547.53125,
+        113.65625
+      ],
+      "flags": {},
+      "order": 3,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "OPT_CONNECTION",
+          "type": "*",
+          "links": null
+        }
+      ],
+      "title": "Fast Groups Bypasser (Mode Switcher)",
+      "properties": {
+        "matchColors": "",
+        "matchTitle": "",
+        "showNav": true,
+        "showAllGraphs": true,
+        "sort": "position",
+        "customSortAlphabet": "",
+        "toggleRestriction": "always one",
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "version": "7.8",
+          "input_ue_unconnectable": {}
+        }
+      }
+    },
+    {
+      "id": 8,
+      "type": "MarkdownNote",
+      "pos": [
+        -677.0894066331898,
+        -380
+      ],
+      "size": [
+        719.734375,
+        1139.734375
+      ],
+      "flags": {},
+      "order": 4,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [],
+      "title": "START HERE — YuE2 Full Song Instructions",
+      "properties": {
+        "Node name for S&R": "MarkdownNote",
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "version": "7.8",
+          "input_ue_unconnectable": {}
+        }
+      },
+      "widgets_values": [
+        "<h1>YuE2 Full Song Producer Studio 🎵</h1>\n<p> Disable Nodes 2 for Fast groups bypasser to work properly</p>\n<p><strong>First use only:</strong> Missing foundation models (<code>YuE2-3B</code> and <code>YuE2-Vae</code>) download automatically from Hugging Face into <code>ComfyUI/models/yue2</code> and <code>ComfyUI/models/vae</code> upon first queue. No manual scripts, installations, or file moving needed.</p>\n<hr>\n<h2>Two Mutually Exclusive Modes (1-Click Switchable)</h2>\n<p>The workflow features two dedicated LiteGraph groups managed by <strong>Fast Groups Bypasser</strong> (set to <em>always one</em> active):</p>\n<ol>\n  <li><strong>Studio & AI Co-Producer Mode (Default Active):</strong>\n    <ul>\n      <li>The <strong>YuE2 Studio & LLM Producer</strong> group is <strong>Active</strong>.</li>\n      <li>The <strong>YuE2 Direct Manual Inputs</strong> group is <strong>Bypassed</strong> (disabled).</li>\n      <li>Select a genre preset, vocal profile, and intro style in <strong>YuE2 Style and Lyrics Studio</strong>.</li>\n      <li>(Optional) Use the <strong>YuE2 LLM Co-Producer & Polisher</strong> to polish lyrics, generate concepts, or optimize styles using your preferred provider (LM Studio, Ollama, OpenAI, Anthropic, Gemini, Grok, DeepSeek, OpenRouter).</li>\n      <li>The generated style and lyrics pass through the <strong>Style & Lyrics Switch / Merger</strong> nodes directly into <strong>YuE2 Neural Song Generator</strong>.</li>\n    </ul>\n  </li>\n  <li><strong>Direct Manual Mode (1-Click Toggle):</strong>\n    <ul>\n      <li>Click <strong>YuE2 Direct Manual Inputs</strong> on the <strong>Fast Groups Bypasser</strong>.</li>\n      <li>The <strong>YuE2 Direct Manual Inputs</strong> group becomes <strong>Active</strong>, and the <strong>YuE2 Studio & LLM Producer</strong> group automatically becomes <strong>Bypassed</strong> (disabled)!</li>\n      <li>Type or paste your prompt and lyrics directly into the two top boxes (<strong>Direct Style Prompt</strong> and <strong>Direct Lyrics Input</strong>).</li>\n      <li>The <strong>Style & Lyrics Switch / Merger</strong> nodes automatically route the direct manual text to the generator. Zero cable rewiring required!</li>\n    </ul>\n  </li>\n  <li><strong>Bonus — Studio Presets Without LLM (Bypass LLM Only):</strong>\n    <ul>\n      <li>If you want to use the Style Studio presets/vocals but skip the LLM, leave Studio mode active, select the <strong>YuE2 LLM Co-Producer</strong> node, and press <strong>Ctrl+M</strong> to bypass only the LLM. Studio output passes straight through into the switches.</li>\n    </ul>\n  </li>\n</ol>\n<hr>\n<h2>Prompting & Lyrics Guidelines</h2>\n<ul>\n  <li><strong>Style Prompt Format:</strong> YuE2 style descriptions followed by vocal profile, genre, instruments, and BPM (e.g. <code>English, high emotive male tenor, synth-pop, 808 bass, driving beat, 102 BPM</code>).</li>\n  <li><strong>Custom Style: </strong> You can add in \" Style of (artist) song (song name) and the LLM will do its best to match style of the performer and song. (must be used in conjunction with Generate Full Song Concept.)\n  <li><strong>Section Tags:</strong> Structure lyrics with uppercase section tags: <code>[Verse 1]</code>, <code>[Chorus]</code>, <code>[Bridge]</code>, <code>[Outro]</code>, and always end with <code>[End]</code>.</li>\n  <li><strong>Vocal Headers:</strong> Place vocal taxonomy at the top of the lyrics: e.g. <code>[voice: high male tenor, soaring clarity] [range: C3-C5]</code>.</li>\n</ul>\n<hr>\n<h2>Useful Settings & Optimizations</h2>\n<ul>\n  <li><strong>keep_model_loaded:</strong> <code>True</code> (default) keeps the model resident in GPU VRAM between runs via an isolated background worker. Repeat generations start instantly without re-loading ~8 GB weights (saves 10–15s per run!). Set to <code>False</code> or run the <strong>YuE2 Unload Model</strong> node to immediately release all VRAM.</li>\n  <li><strong>ode_steps:</strong> Audio synthesis diffusion steps. <code>32</code> is studio reference fidelity; <code>24</code> is 1.3x faster (~3.5s saved); <code>16</code> is ultra-fast draft mode (~2x faster).</li>\n  <li><strong>attention_backend:</strong> <code>auto</code> or <code>cudnn</code> utilizes hardware-accelerated Tensor Core SDPA on RTX 40/50 series GPUs (Ada/Blackwell); <code>sage</code> uses SageAttention INT8 QK; <code>sdpa</code> is PyTorch native fallback.</li>\n  <li><strong>cot:</strong> Leave at <code>full</code> for standard songs (full Chain-of-Thought musical planning + melody tokens + audio synthesis). Use <code>melody</code> for melody-guided generation or <code>off</code> for direct audio synthesis.</li>\n  <li><strong>memory_budget_gib:</strong> <code>30</code> is ideal for 32GB+ GPUs; lower to <code>16–24</code> on 24GB GPUs if other applications share VRAM.</li>\n  <li><strong>cfg_scale:</strong> <code>1.0</code> is default. Controls adherence to style conditioning.</li>\n  <li><strong>seed:</strong> <code>0</code> generates a random seed on each queue. Use the dropdown below it to set <code>randomize</code>, <code>increment</code>, <code>decrement</code>, or <code>fixed</code>.</li>\n</ul>\n<p><strong>Audio Output:</strong> Plays back directly in the graph via <strong>YuE2 Audio Preview & Saver</strong> and saves cleanly to <code>ComfyUI/output/YuE2</code> (MP3 320k, WAV, or FLAC). Hover over any parameter for detailed tooltips.</p>"
+      ],
+      "widgets_values_named": {
+        "text": "<h1>YuE2 Full Song Producer Studio 🎵</h1>\n<p> Disable Nodes 2 for Fast groups bypasser to work properly</p>\n<p><strong>First use only:</strong> Missing foundation models (<code>YuE2-3B</code> and <code>YuE2-Vae</code>) download automatically from Hugging Face into <code>ComfyUI/models/yue2</code> and <code>ComfyUI/models/vae</code> upon first queue. No manual scripts, installations, or file moving needed.</p>\n<hr>\n<h2>Two Mutually Exclusive Modes (1-Click Switchable)</h2>\n<p>The workflow features two dedicated LiteGraph groups managed by <strong>Fast Groups Bypasser</strong> (set to <em>always one</em> active):</p>\n<ol>\n  <li><strong>Studio & AI Co-Producer Mode (Default Active):</strong>\n    <ul>\n      <li>The <strong>YuE2 Studio & LLM Producer</strong> group is <strong>Active</strong>.</li>\n      <li>The <strong>YuE2 Direct Manual Inputs</strong> group is <strong>Bypassed</strong> (disabled).</li>\n      <li>Select a genre preset, vocal profile, and intro style in <strong>YuE2 Style and Lyrics Studio</strong>.</li>\n      <li>(Optional) Use the <strong>YuE2 LLM Co-Producer & Polisher</strong> to polish lyrics, generate concepts, or optimize styles using your preferred provider (LM Studio, Ollama, OpenAI, Anthropic, Gemini, Grok, DeepSeek, OpenRouter).</li>\n      <li>The generated style and lyrics pass through the <strong>Style & Lyrics Switch / Merger</strong> nodes directly into <strong>YuE2 Neural Song Generator</strong>.</li>\n    </ul>\n  </li>\n  <li><strong>Direct Manual Mode (1-Click Toggle):</strong>\n    <ul>\n      <li>Click <strong>YuE2 Direct Manual Inputs</strong> on the <strong>Fast Groups Bypasser</strong>.</li>\n      <li>The <strong>YuE2 Direct Manual Inputs</strong> group becomes <strong>Active</strong>, and the <strong>YuE2 Studio & LLM Producer</strong> group automatically becomes <strong>Bypassed</strong> (disabled)!</li>\n      <li>Type or paste your prompt and lyrics directly into the two top boxes (<strong>Direct Style Prompt</strong> and <strong>Direct Lyrics Input</strong>).</li>\n      <li>The <strong>Style & Lyrics Switch / Merger</strong> nodes automatically route the direct manual text to the generator. Zero cable rewiring required!</li>\n    </ul>\n  </li>\n  <li><strong>Bonus — Studio Presets Without LLM (Bypass LLM Only):</strong>\n    <ul>\n      <li>If you want to use the Style Studio presets/vocals but skip the LLM, leave Studio mode active, select the <strong>YuE2 LLM Co-Producer</strong> node, and press <strong>Ctrl+M</strong> to bypass only the LLM. Studio output passes straight through into the switches.</li>\n    </ul>\n  </li>\n</ol>\n<hr>\n<h2>Prompting & Lyrics Guidelines</h2>\n<ul>\n  <li><strong>Style Prompt Format:</strong> YuE2 style descriptions followed by vocal profile, genre, instruments, and BPM (e.g. <code>English, high emotive male tenor, synth-pop, 808 bass, driving beat, 102 BPM</code>).</li>\n  <li><strong>Custom Style: </strong> You can add in \" Style of (artist) song (song name) and the LLM will do its best to match style of the performer and song. (must be used in conjunction with Generate Full Song Concept.)\n  <li><strong>Section Tags:</strong> Structure lyrics with uppercase section tags: <code>[Verse 1]</code>, <code>[Chorus]</code>, <code>[Bridge]</code>, <code>[Outro]</code>, and always end with <code>[End]</code>.</li>\n  <li><strong>Vocal Headers:</strong> Place vocal taxonomy at the top of the lyrics: e.g. <code>[voice: high male tenor, soaring clarity] [range: C3-C5]</code>.</li>\n</ul>\n<hr>\n<h2>Useful Settings & Optimizations</h2>\n<ul>\n  <li><strong>keep_model_loaded:</strong> <code>True</code> (default) keeps the model resident in GPU VRAM between runs via an isolated background worker. Repeat generations start instantly without re-loading ~8 GB weights (saves 10–15s per run!). Set to <code>False</code> or run the <strong>YuE2 Unload Model</strong> node to immediately release all VRAM.</li>\n  <li><strong>ode_steps:</strong> Audio synthesis diffusion steps. <code>32</code> is studio reference fidelity; <code>24</code> is 1.3x faster (~3.5s saved); <code>16</code> is ultra-fast draft mode (~2x faster).</li>\n  <li><strong>attention_backend:</strong> <code>auto</code> or <code>cudnn</code> utilizes hardware-accelerated Tensor Core SDPA on RTX 40/50 series GPUs (Ada/Blackwell); <code>sage</code> uses SageAttention INT8 QK; <code>sdpa</code> is PyTorch native fallback.</li>\n  <li><strong>cot:</strong> Leave at <code>full</code> for standard songs (full Chain-of-Thought musical planning + melody tokens + audio synthesis). Use <code>melody</code> for melody-guided generation or <code>off</code> for direct audio synthesis.</li>\n  <li><strong>memory_budget_gib:</strong> <code>30</code> is ideal for 32GB+ GPUs; lower to <code>16–24</code> on 24GB GPUs if other applications share VRAM.</li>\n  <li><strong>cfg_scale:</strong> <code>1.0</code> is default. Controls adherence to style conditioning.</li>\n  <li><strong>seed:</strong> <code>0</code> generates a random seed on each queue. Use the dropdown below it to set <code>randomize</code>, <code>increment</code>, <code>decrement</code>, or <code>fixed</code>.</li>\n</ul>\n<p><strong>Audio Output:</strong> Plays back directly in the graph via <strong>YuE2 Audio Preview & Saver</strong> and saves cleanly to <code>ComfyUI/output/YuE2</code> (MP3 320k, WAV, or FLAC). Hover over any parameter for detailed tooltips.</p>"
+      },
+      "color": "#23445a",
+      "bgcolor": "#315f7d"
+    },
+    {
+      "id": 14,
+      "type": "ShowText|pysssss",
+      "pos": [
+        1197.7193192781608,
+        -400.7686425261752
+      ],
+      "size": [
+        413.15625,
+        429.578125
+      ],
+      "flags": {},
+      "order": 8,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "text",
+          "type": "STRING",
+          "link": 11
+        }
+      ],
+      "outputs": [
+        {
+          "name": "STRING",
+          "shape": 6,
+          "type": "STRING",
+          "links": null
+        }
+      ],
+      "title": "Output Lyrics",
+      "properties": {
+        "Node name for S&R": "ShowText|pysssss",
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "input_ue_unconnectable": {},
+          "version": "7.8"
+        }
+      },
+      "widgets_values": [
+        ""
+      ],
+      "widgets_values_named": {
+        "text_0": ""
+      }
+    },
+    {
+      "id": 1,
+      "type": "YuE2StyleAndLyricsStudio",
+      "pos": [
+        80,
+        160
+      ],
+      "size": [
+        387.421875,
+        604.90625
+      ],
+      "flags": {},
+      "order": 5,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "style_prompt",
+          "type": "STRING",
+          "links": [
+            1
+          ]
+        },
+        {
+          "name": "lyrics",
+          "type": "STRING",
+          "links": [
+            2
+          ]
+        },
+        {
+          "name": "bpm",
+          "type": "INT",
+          "links": [
+            12
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "YuE2StyleAndLyricsStudio",
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "version": "7.8",
+          "input_ue_unconnectable": {}
+        }
+      },
+      "widgets_values": [
+        "Custom / Keep Only Lyrics",
+        "Warm Smooth Baritone (Male)",
+        120,
+        "None",
+        "Style of Bruno Mars song Risk It All",
+        "[Hook]\nI’m slowing it down for the one that I love\nLike the earth’s standing still while the stars crash above\n\n[Verse 1]\n[Soft piano only] [Intimate vocal]\nThe clock on the wall is a liar tonight\nSpinning too fast while we chase the light\nI’m holding your hand like a lifeline in June\nThe only thing quiet in a world out of tune\n\n[Chorus]\n[Chorus | Energy: Maximum] [Explosive vocal delivery] [Full band burst]\nOh, I’m slowing it down for the one that I love!\nLike the earth’s standing still while the stars crash above!\nIt’s a beautiful weight, it’s a terrifying grace\nI’m finally home in the light of your grace!\n(In your grace)\n\n[Verse 2]\n[Drums settle into a driving backbeat]\nWe used to be shadows just passing through doors\nBut I’m not a ghost on these hardwood floors\nEvery bridge that I burned was a lesson I learned\nTo wait for the peace that I’ve finally earned\n\n[Chorus]\n[Chorus | Energy: Maximum] [Anthemic energy]\nOh, I’m slowing it down for the one that I love!\nLike the earth’s standing still while the stars crash above!\nIt’s a beautiful weight, it’s a terrifying grace\nI’m finally home in the light of your grace!\n\n[Verse 3]\n[Building intensity] [Gritty piano chords]\nDon't let the sun rise, don't let it go cold\nI’ve found a story that never gets old\nThe seconds are dripping like honey and wine\nI’m finally yours, and I’m glad that you’re mine\n\n[Chorus]\n[Chorus | Energy: Maximum] [Maximum intensity] [Hard hitting drums]\nOh, I’m slowing it down for the one that I love!\nLike the earth’s standing still while the stars crash above!\nIt’s a beautiful weight, it’s a terrifying grace\nI’m finally home in the light of your grace!\n\n[Outro]\n[OUTRO - BIG FINAL HIT + HARD STOP, massive hall reverb tail]\n[Instrumental: Final sustained piano note]\nSlowing it down...\nFor the one I love...\n[Precision Landing: Instrumental: Single piano chord]\n[End]",
+        "",
+        ""
+      ],
+      "widgets_values_named": {
+        "genre_preset": "Custom / Keep Only Lyrics",
+        "vocal_profile": "Warm Smooth Baritone (Male)",
+        "bpm": 120,
+        "intro_style": "None",
+        "custom_style": "Style of Bruno Mars song Risk It All",
+        "lyrics": "[Hook]\nI’m slowing it down for the one that I love\nLike the earth’s standing still while the stars crash above\n\n[Verse 1]\n[Soft piano only] [Intimate vocal]\nThe clock on the wall is a liar tonight\nSpinning too fast while we chase the light\nI’m holding your hand like a lifeline in June\nThe only thing quiet in a world out of tune\n\n[Chorus]\n[Chorus | Energy: Maximum] [Explosive vocal delivery] [Full band burst]\nOh, I’m slowing it down for the one that I love!\nLike the earth’s standing still while the stars crash above!\nIt’s a beautiful weight, it’s a terrifying grace\nI’m finally home in the light of your grace!\n(In your grace)\n\n[Verse 2]\n[Drums settle into a driving backbeat]\nWe used to be shadows just passing through doors\nBut I’m not a ghost on these hardwood floors\nEvery bridge that I burned was a lesson I learned\nTo wait for the peace that I’ve finally earned\n\n[Chorus]\n[Chorus | Energy: Maximum] [Anthemic energy]\nOh, I’m slowing it down for the one that I love!\nLike the earth’s standing still while the stars crash above!\nIt’s a beautiful weight, it’s a terrifying grace\nI’m finally home in the light of your grace!\n\n[Verse 3]\n[Building intensity] [Gritty piano chords]\nDon't let the sun rise, don't let it go cold\nI’ve found a story that never gets old\nThe seconds are dripping like honey and wine\nI’m finally yours, and I’m glad that you’re mine\n\n[Chorus]\n[Chorus | Energy: Maximum] [Maximum intensity] [Hard hitting drums]\nOh, I’m slowing it down for the one that I love!\nLike the earth’s standing still while the stars crash above!\nIt’s a beautiful weight, it’s a terrifying grace\nI’m finally home in the light of your grace!\n\n[Outro]\n[OUTRO - BIG FINAL HIT + HARD STOP, massive hall reverb tail]\n[Instrumental: Final sustained piano note]\nSlowing it down...\nFor the one I love...\n[Precision Landing: Instrumental: Single piano chord]\n[End]",
+        "custom_instruments": "",
+        "extra_tags": ""
+      }
+    },
+    {
+      "id": 5,
+      "type": "YuE2SongGenerator",
+      "pos": [
+        1194.926880578269,
+        72.1168206013915
+      ],
+      "size": [
+        420.25,
+        661.453125
+      ],
+      "flags": {},
+      "order": 10,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "style",
+          "type": "STRING",
+          "widget": {
+            "name": "style"
+          },
+          "link": 9
+        },
+        {
+          "name": "lyrics",
+          "type": "STRING",
+          "widget": {
+            "name": "lyrics"
+          },
+          "link": 10
+        },
+        {
+          "name": "seed",
+          "type": "INT",
+          "widget": {
+            "name": "seed"
+          },
+          "link": 4
+        }
+      ],
+      "outputs": [
+        {
+          "name": "audio",
+          "type": "AUDIO",
+          "links": [
+            5
+          ]
+        },
+        {
+          "name": "abc_score",
+          "type": "STRING",
+          "links": null
+        },
+        {
+          "name": "audio_path",
+          "type": "STRING",
+          "links": null
+        },
+        {
+          "name": "lyrics_used",
+          "type": "STRING",
+          "links": null
+        },
+        {
+          "name": "style_used",
+          "type": "STRING",
+          "links": null
+        },
+        {
+          "name": "seed",
+          "type": "INT",
+          "links": null
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "YuE2SongGenerator",
+        "ue_properties": {
+          "widget_ue_connectable": {
+            "style": true,
+            "lyrics": true,
+            "seed": true
+          },
+          "version": "7.8",
+          "input_ue_unconnectable": {}
+        }
+      },
+      "widgets_values": [
+        "",
+        "",
+        "full",
+        0,
+        "randomize",
+        1,
+        "YuE2-3B",
+        "YuE2-Vae",
+        "auto",
+        true,
+        "comfy_song",
+        24,
+        "cudnn",
+        30,
+        false
+      ],
+      "widgets_values_named": {
+        "style": "",
+        "lyrics": "",
+        "cot": "full",
+        "seed": 0,
+        "control_after_generate": "randomize",
+        "cfg_scale": 1,
+        "model": "YuE2-3B",
+        "vae": "YuE2-Vae",
+        "device": "auto",
+        "keep_model_loaded": true,
+        "track_id": "comfy_song",
+        "ode_steps": 24,
+        "attention_backend": "cudnn",
+        "memory_budget_gib": 30,
+        "save_intermediate_artifacts": false
+      }
+    },
+    {
+      "id": 3,
+      "type": "YuE2LLMProducer",
+      "pos": [
+        516.2991693671268,
+        163.49269285429597
+      ],
+      "size": [
+        371,
+        592.75
+      ],
+      "flags": {},
+      "order": 6,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "input_text",
+          "type": "STRING",
+          "widget": {
+            "name": "input_text"
+          },
+          "link": 2
+        },
+        {
+          "name": "style_context",
+          "shape": 7,
+          "type": "STRING",
+          "widget": {
+            "name": "style_context"
+          },
+          "link": 1
+        },
+        {
+          "name": "bpm",
+          "shape": 7,
+          "type": "INT",
+          "widget": {
+            "name": "bpm"
+          },
+          "link": 12
+        }
+      ],
+      "outputs": [
+        {
+          "name": "lyrics_out",
+          "type": "STRING",
+          "links": [
+            3,
+            11
+          ]
+        },
+        {
+          "name": "style_out",
+          "type": "STRING",
+          "links": [
+            6
+          ]
+        },
+        {
+          "name": "title",
+          "type": "STRING",
+          "links": null
+        },
+        {
+          "name": "suggested_seed",
+          "type": "INT",
+          "links": null
+        },
+        {
+          "name": "bpm",
+          "type": "INT",
+          "links": null
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "YuE2LLMProducer",
+        "ue_properties": {
+          "widget_ue_connectable": {
+            "input_text": true,
+            "style_context": true
+          },
+          "version": "7.8",
+          "input_ue_unconnectable": {}
+        }
+      },
+      "widgets_values": [
+        "Generate Full Song Concept",
+        "LMStudio",
+        "",
+        "gemma-4-e4b-it",
+        "",
+        "",
+        "http://localhost:1234/v1",
+        "",
+        0.7,
+        1,
+        8192,
+        "full"
+      ],
+      "widgets_values_named": {
+        "action": "Generate Full Song Concept",
+        "provider": "LMStudio",
+        "input_text": "",
+        "model": "gemma-4-e4b-it",
+        "api_key": "",
+        "custom_model": "",
+        "base_url": "http://localhost:1234/v1",
+        "style_context": "",
+        "bpm": 0.7,
+        "temperature": 1,
+        "max_tokens": 8192,
+        "cot_mode": "full"
+      }
+    }
+  ],
+  "links": [
+    [
+      1,
+      1,
+      0,
+      3,
+      1,
+      "STRING"
+    ],
+    [
+      2,
+      1,
+      1,
+      3,
+      0,
+      "STRING"
+    ],
+    [
+      3,
+      3,
+      0,
+      13,
+      0,
+      "STRING"
+    ],
+    [
+      4,
+      4,
+      0,
+      5,
+      2,
+      "INT"
+    ],
+    [
+      5,
+      5,
+      0,
+      6,
+      0,
+      "AUDIO"
+    ],
+    [
+      6,
+      3,
+      1,
+      12,
+      0,
+      "STRING"
+    ],
+    [
+      7,
+      10,
+      0,
+      12,
+      1,
+      "STRING"
+    ],
+    [
+      8,
+      11,
+      0,
+      13,
+      1,
+      "STRING"
+    ],
+    [
+      9,
+      12,
+      0,
+      5,
+      0,
+      "STRING"
+    ],
+    [
+      10,
+      13,
+      0,
+      5,
+      1,
+      "STRING"
+    ],
+    [
+      11,
+      3,
+      0,
+      14,
+      0,
+      "STRING"
+    ],
+    [
+      12,
+      1,
+      2,
+      3,
+      2,
+      "INT"
+    ]
+  ],
+  "groups": [
+    {
+      "id": 1,
+      "title": "YuE2 Direct Manual Inputs",
+      "bounding": [
+        60,
+        -280,
+        840,
+        320
+      ],
+      "color": "#704214",
+      "flags": {}
+    },
+    {
+      "id": 2,
+      "title": "YuE2 Studio & LLM Producer",
+      "bounding": [
+        60,
+        100,
+        841.746346427148,
+        662.868279518564
+      ],
+      "color": "#3f789e",
+      "flags": {}
+    }
+  ],
+  "config": {},
+  "extra": {
+    "comfyui_mcp": {
+      "workflow_uuid": "686b2694-cef8-47f8-9184-ae14f5f67b2e"
+    },
+    "ue_links": [],
+    "ds": {
+      "scale": 0.9560494502538156,
+      "offset": [
+        550.4392381680677,
+        726.420530168166
+      ]
+    },
+    "anomalous_hashes": {},
+    "links_added_by_ue": [],
+    "k2cf_state_id": "k2cf_1789150292168_l0fmxhywnd",
+    "frontendVersion": "1.51.9",
+    "VHS_latentpreview": false,
+    "VHS_latentpreviewrate": 0,
+    "VHS_MetadataImage": true,
+    "VHS_KeepIntermediate": true
+  },
+  "version": 0.4
+}

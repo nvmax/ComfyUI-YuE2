@@ -1,0 +1,23 @@
+# ComfyUI-YuE2 Dependencies
+# Automatically installed by ComfyUI-Manager or via: pip install -r requirements.txt
+
+# Audio I/O & Encoding (Lossless WAV, FLAC, MP3 320k)
+soundfile>=0.12.1
+
+# Model weights & Hugging Face automated discovery/download
+huggingface-hub>=0.23.0
+safetensors>=0.4.0
+
+# Foundation model architecture & tokenization
+transformers>=4.40.0
+tiktoken>=0.7.0
+accelerate>=0.28.0
+
+# Numerical computing
+numpy>=1.24.0
+
+# Core YuE2 inference engine (also bundled as offline wheel in wheels/)
+yue2-infer>=0.1.5
+
+# NOTE: PyTorch (torch, torchaudio) is provided by your ComfyUI environment.
+# Do not pin torch here to preserve your existing CUDA acceleration build.
