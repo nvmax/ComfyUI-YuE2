@@ -16,8 +16,8 @@ accelerate>=0.28.0
 # Numerical computing
 numpy>=1.24.0
 
-# Core YuE2 inference engine (also bundled as offline wheel in wheels/)
-yue2-infer>=0.1.5
+# Core YuE2 inference engine (bundled as offline wheel in wheels/ and auto-installed)
+# yue2-infer>=0.1.5
 
 # NOTE: PyTorch (torch, torchaudio) is provided by your ComfyUI environment.
 # Do not pin torch here to preserve your existing CUDA acceleration build.

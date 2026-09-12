@@ -1,7 +1,7 @@
 [project]
 name = "yue2"
 description = "Professional neural music generation suite for ComfyUI powered by YuE2 and LLM Studio"
-version = "1.0.0"
+version = "1.0.2"
 license = { file = "LICENSE" }
 dependencies = [
     "soundfile>=0.12.1",
@@ -11,7 +11,7 @@ dependencies = [
     "tiktoken>=0.7.0",
     "accelerate>=0.28.0",
     "numpy>=1.24.0",
-    "yue2-infer>=0.1.5",
+    # "yue2-infer>=0.1.5",  # Auto-installed from bundled wheel in wheels/
 ]
 requires-python = ">=3.10"
 classifiers = [

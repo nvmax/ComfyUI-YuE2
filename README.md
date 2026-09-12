@@ -8,20 +8,41 @@ Designed for zero external desktop dependencies, native ComfyUI model folder man
 
 ## 📦 Installation
 
-1. **Via ComfyUI-Manager**:
-   - Search for `ComfyUI-YuE2` in ComfyUI Manager and click **Install**. ComfyUI-Manager will automatically install all dependencies listed in `requirements.txt`.
+### Option 1: Via ComfyUI-Manager
+1. Search for `ComfyUI-YuE2` in ComfyUI Manager and click **Install**. ComfyUI-Manager installs all dependencies from `requirements.txt`.
+2. On initial startup, the auto-install hook in `__init__.py` detects if `yue2` is installed and automatically triggers `install.py` to install the bundled offline wheel using `--no-deps`.
 
-2. **Manual Git Clone**:
+### Option 2: Manual Terminal Installation
+From your root ComfyUI directory (e.g., `ComfyUI_windows_portable`):
+
+1. **Clone the repository**:
    ```bash
    cd ComfyUI/custom_nodes
    git clone https://github.com/your-repo/ComfyUI-YuE2.git
+   cd ../..
    ```
-   Install the required dependencies using your ComfyUI Python environment:
+
+2. **Step 1: Install the offline wheel with `--no-deps`**:
    ```bash
-   # In ComfyUI portable or venv:
-   python_embeded\python.exe -m pip install -r custom_nodes/ComfyUI-YuE2/requirements.txt
+   .\python_embeded\python.exe -s -m pip install --no-deps .\ComfyUI\custom_nodes\ComfyUI-YuE2\wheels\yue2_infer-0.1.5-py3-none-any.whl
    ```
-   *(Or run `python custom_nodes/ComfyUI-YuE2/install.py` to auto-install the bundled offline wheel)*
+   *(Alternatively, running `.\python_embeded\python.exe .\ComfyUI\custom_nodes\ComfyUI-YuE2\install.py` will execute this exact `--no-deps` command for you.)*
+
+   > [!IMPORTANT]
+   > **Why `--no-deps` is critical**:
+   > The internal metadata inside `yue2_infer-0.1.5-py3-none-any.whl` lists `torch==2.10.0`. If installed without `--no-deps`, pip will attempt to uninstall your existing CUDA-enabled PyTorch build and replace it with a CPU version. Using `--no-deps` installs only the YuE2 engine and preserves your CUDA setup intact.
+
+3. **Step 2: Install remaining node dependencies**:
+   ```bash
+   .\python_embeded\python.exe -s -m pip install -r .\ComfyUI\custom_nodes\ComfyUI-YuE2\requirements.txt
+   ```
+   *(With `yue2-infer` commented out in `requirements.txt`, pip installs `soundfile`, `tiktoken`, and other packages cleanly without throwing PyPI distribution errors)*
+
+4. **Step 3: Verification**:
+   ```bash
+   .\python_embeded\python.exe -c "import torch, yue2, importlib, sys; sys.path.insert(0, './ComfyUI'); mod = importlib.import_module('custom_nodes.ComfyUI-YuE2'); print('CUDA:', torch.cuda.is_available(), '| Torch:', torch.__version__, '| Loaded Nodes:', len(mod.NODE_CLASS_MAPPINGS))"
+   ```
+   *Expected output*: `CUDA: True | Torch: 2.xx.x+cu1xx | Loaded Nodes: 9`
 
 ---
 
