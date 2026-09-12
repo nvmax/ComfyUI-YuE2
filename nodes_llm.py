@@ -203,6 +203,7 @@ DEFAULT_MODELS = {
 
 PROVIDER_MODELS = {
     "LMStudio": [
+        "qwen3.8-27b-uncensored-hauhaucs-aggressive-mtp",
         "gemma-4-e4b-it",
         "qwen2.5-7b-instruct",
         "qwen2.5-14b-instruct",
@@ -711,6 +712,11 @@ class YuE2LLMProducer:
     """Multi-Provider AI Music Co-Producer: generates complete song concepts, polishes verbatim lyrics, and crafts acoustic style strings."""
 
     @classmethod
+    def VALIDATE_INPUTS(cls, **kwargs):
+        # Allow any dynamic or custom model identifier without failing ComfyUI enum validation
+        return True
+
+    @classmethod
     def INPUT_TYPES(cls):
         init_models = get_initial_models()
         def_model = init_models[0] if init_models else "gemma-4-e4b-it"
@@ -797,6 +803,16 @@ class YuE2LLMProducer:
 
         print(f"\n[YuE2 AI Producer] Provider: {provider_name} | Model: {final_model} | Action: {action} | BPM: {effective_bpm}")
 
+        # Custom / Keep Only Lyrics preserves user lyrics completely untouched without LLM rewriting
+        if "Keep Only Lyrics" in str(style_context):
+            raw_input_text = format_lyrics_payload(input_text).strip()
+            if not raw_input_text.rstrip().endswith("[End]"):
+                clean_lyrics = raw_input_text.rstrip() + "\n\n[End]"
+            else:
+                clean_lyrics = raw_input_text
+            style_str = enforce_english_style(style_context)
+            return (clean_lyrics, style_str, "Custom Track", 42, effective_bpm)
+
         if action == "Polish & Arrange Lyrics":
             raw_input_text = format_lyrics_payload(input_text)
             user_msg = (
@@ -826,7 +842,7 @@ class YuE2LLMProducer:
                     f"User Lyrics to Arrange & Architect into Full Song Concept (KEEP ALL SUNG LYRICS 100% VERBATIM):\n{format_lyrics_payload(input_text)}\n\n"
                     f"Preferred genre / style: {style_context or 'Pop / Dance Pop'}\n"
                     f"Target Tempo: {effective_bpm} BPM\n"
-                    f"Language: English only\n\n"
+                    f"Language: Preserve user's original language (English, Danish, Spanish, etc.) - DO NOT translate\n\n"
                     f"Instruction: Generate the complete song concept. Keep all user sung lyrics 100% verbatim, and architect rich technical sub-tags, dynamic cues, vocal assignments, and top-loaded anchors. Tailor the outro dynamically to the song's genre, tempo ({effective_bpm} BPM), and mood. Conclude with [End] on its own line."
                 )
             else:

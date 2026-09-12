@@ -311,7 +311,7 @@ def get_section_tags_for_genre(base_sec: str, genre_preset: str) -> tuple:
 
 def enrich_section_tags(lyrics_text: str, genre_preset: str) -> str:
     """Enhances bare section headers with dynamic energy, vocal delivery, and instrumental sub-tags while keeping lyric lines 100% untouched."""
-    if not lyrics_text or genre_preset == "Custom / Keep Typed Style":
+    if not lyrics_text or genre_preset in ("Custom / Keep Typed Style", "Custom / Keep Only Lyrics"):
         return lyrics_text
 
     lines = lyrics_text.splitlines()
@@ -512,6 +512,13 @@ class YuE2StyleAndLyricsStudio:
             raw_lyrics = "\n".join(str(x) for x in lyrics).strip()
         else:
             raw_lyrics = str(lyrics).strip() if lyrics else ""
+
+        # Custom / Keep Only Lyrics preserves user lyrics completely untouched
+        if genre_preset == "Custom / Keep Only Lyrics":
+            formatted_lyrics = raw_lyrics or "[Instrumental Section]"
+            if not formatted_lyrics.rstrip().endswith("[End]"):
+                formatted_lyrics = formatted_lyrics.rstrip() + "\n\n[End]"
+            return (style_str, formatted_lyrics, bpm)
 
         # Enrich section headers with dynamic energy, vocal, and instrumental sub-tags (unless Custom / Keep Typed Style)
         raw_lyrics = enrich_section_tags(raw_lyrics, genre_preset)
