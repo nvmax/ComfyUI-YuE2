@@ -36,12 +36,23 @@ def sanitize_device(dev: str) -> str:
     return dev
 
 # Proactive patch to ensure Windows PyTorch builds without USE_FLASH_ATTENTION
-# seamlessly fall back to PyTorch's native SDPA CUDA graph
+# seamlessly fall back to PyTorch's native SDPA CUDA graph, while propagating
+# the user's chosen attention backend (auto, cudnn, sdpa, sage) to GraphAR.
+_CURRENT_ATTENTION_BACKEND = "auto"
+
 try:
     import yue2.cuda_graph as cg
     _orig_graph_init = cg.GraphAR.__init__
 
     def _patched_graph_init(self, model, prefixes, max_tokens, attention_backend="auto", **kwargs):
+        global _CURRENT_ATTENTION_BACKEND
+        if attention_backend == "auto" and _CURRENT_ATTENTION_BACKEND != "auto":
+            attention_backend = _CURRENT_ATTENTION_BACKEND
+
+        # Map non-standard backends to sdpa if not directly supported by GraphAR
+        if attention_backend not in {"auto", "flash", "cudnn", "sdpa"}:
+            attention_backend = "sdpa"
+
         if attention_backend == "auto":
             try:
                 _q = torch.zeros(1, 1, 1, 64, device=model.device, dtype=model.dtype)
@@ -56,6 +67,8 @@ except Exception as e:
     pass
 
 def run_generation(args):
+    global _CURRENT_ATTENTION_BACKEND
+
     # Load request JSON
     req_path = Path(args.request)
     if not req_path.exists():
@@ -73,6 +86,7 @@ def run_generation(args):
 
     ode_steps = int(data.get("ode_steps", args.ode_steps))
     attn_backend = str(data.get("attention_backend", args.attention_backend))
+    _CURRENT_ATTENTION_BACKEND = attn_backend
     gen_config = GenerationConfig(ode_steps=ode_steps)
 
     loader = {
@@ -82,7 +96,6 @@ def run_generation(args):
         "device": target_device,
         "memory_budget_gib": args.memory_budget_gib,
         "progress": True,
-        "attention_backend": attn_backend,
         "generation_config": gen_config,
     }
 
@@ -96,6 +109,7 @@ def run_generation(args):
         cfg_scale=float(data.get("cfg_scale", 1.0))
     )
 
+    loader.pop('attention_backend', None)
     with YuE2Pipeline.from_pretrained(**loader) as pipe:
         print(f"[YuE2 Runner] Starting generation (mode: {request.cot}, seed: {request.seed}, ode_steps: {ode_steps})...")
         song = pipe(**request.to_dict())
@@ -112,6 +126,8 @@ def run_generation(args):
             print(f"[YuE2 Runner] Audio synthesized successfully: {audio_path.name} ({duration:.1f}s)")
 
 def run_worker(args):
+    global _CURRENT_ATTENTION_BACKEND
+    _CURRENT_ATTENTION_BACKEND = str(args.attention_backend)
     target_device = sanitize_device(args.device)
     from yue2 import YuE2Pipeline
     from yue2.protocol import SongRequest, GenerationConfig
@@ -123,11 +139,11 @@ def run_worker(args):
         "device": target_device,
         "memory_budget_gib": args.memory_budget_gib,
         "progress": True,
-        "attention_backend": args.attention_backend,
         "generation_config": GenerationConfig(ode_steps=args.ode_steps),
     }
 
     print(f"[YuE2 Worker] Loading pipeline into VRAM on {target_device} (attention={args.attention_backend})...", flush=True)
+    loader.pop('attention_backend', None)
     with YuE2Pipeline.from_pretrained(**loader) as pipe:
         print("[YuE2 Worker] READY", flush=True)
         for line in sys.stdin:
@@ -144,6 +160,8 @@ def run_worker(args):
                 out_dir.mkdir(parents=True, exist_ok=True)
 
                 data = json.loads(req_path.read_text(encoding="utf-8"))
+                if "attention_backend" in data:
+                    _CURRENT_ATTENTION_BACKEND = str(data["attention_backend"])
                 ode_steps = int(data.get("ode_steps", args.ode_steps))
                 pipe.generation_config = GenerationConfig(ode_steps=ode_steps)
 

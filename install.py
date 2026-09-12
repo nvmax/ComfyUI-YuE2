@@ -24,7 +24,8 @@ def install():
         print("[YuE2 Setup] Successfully installed yue2-infer.")
     else:
         print("[YuE2 Setup] No local wheel found. Attempting to install from PyPI...")
-        subprocess.check_call([sys.executable, "-m", "pip", "install", "yue2-infer"])
+        subprocess.check_call([sys.executable, "-m", "pip", "install", "--no-deps", "yue2-infer"])
+        print("[YuE2 Setup] Successfully installed yue2-infer.")
 
 if __name__ == "__main__":
     install()
