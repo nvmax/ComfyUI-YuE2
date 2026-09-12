@@ -64,6 +64,16 @@ def normalize_text(text) -> str:
         text = text.replace(old, new)
     return text.strip()
 
+def _should_suppress_log_line(line_str: str) -> bool:
+    # Filter out harmless PyTorch C++ CUDA allocator warnings
+    if "CUDAMallocAsyncAllocator.cpp" in line_str:
+        return True
+    if "Attempting uncaptured free of a captured allocation" in line_str:
+        return True
+    if "This is technically allowed, but may indicate you are losing the last user-visible tensor" in line_str:
+        return True
+    return False
+
 _WORKER_PROCESS = None
 _WORKER_CONFIG = None
 
@@ -109,7 +119,7 @@ def get_or_start_worker(model_path, vae_path, target_device, attention_backend, 
 
     for line in iter(proc.stdout.readline, ""):
         line_str = line.strip()
-        if line_str:
+        if line_str and not _should_suppress_log_line(line_str):
             print(f"[YuE2] {line_str}")
         if "[YuE2 Worker] READY" in line_str:
             break
@@ -240,7 +250,7 @@ class YuE2SongGenerator:
 
             for line in iter(worker.stdout.readline, ""):
                 line_str = line.strip()
-                if line_str:
+                if line_str and not _should_suppress_log_line(line_str):
                     print(f"[YuE2] {line_str}")
                 if "[YuE2 Worker] COMPLETED" in line_str:
                     break
@@ -285,7 +295,7 @@ class YuE2SongGenerator:
 
             for line in iter(proc.stdout.readline, ""):
                 line_str = line.strip()
-                if line_str:
+                if line_str and not _should_suppress_log_line(line_str):
                     print(f"[YuE2] {line_str}")
 
             proc.stdout.close()

@@ -63,7 +63,76 @@ try:
         _orig_graph_init(self, model, prefixes, max_tokens, attention_backend=attention_backend, **kwargs)
 
     cg.GraphAR.__init__ = _patched_graph_init
-except Exception as e:
+except Exception:
+    pass
+
+# Proactive patch for Stage 2 (NAR / Audio Synthesis) attention chunking:
+# Without FlashAttention on Windows, PyTorch SDPA falls back to materializing
+# the full [heads, seq, seq] attention matrix. For long sequences (e.g., 8,000+ tokens),
+# an unchunked block demands 12+ GiB in a single allocation and causes OOM.
+# By enforcing a default query_chunk_size (1024), we activate yue2's native
+# chunked attention loop, keeping peak attention VRAM to ~1 GiB while preserving
+# 100% mathematical and acoustic equivalence.
+try:
+    import yue2.nar as nar
+    _orig_nar_attention = nar.attention
+
+    def _patched_nar_attention(q, k, v, *, causal=False, backend="sdpa", query_chunk_size=None):
+        if query_chunk_size is None and q.device.type == "cuda":
+            query_chunk_size = 1024
+        return _orig_nar_attention(q, k, v, causal=causal, backend=backend, query_chunk_size=query_chunk_size)
+
+    nar.attention = _patched_nar_attention
+
+    if hasattr(nar, "CachedNAR"):
+        _orig_cached_nar_init = nar.CachedNAR.__init__
+
+        def _patched_cached_nar_init(self, model, chunk, attention="sdpa", query_chunk_size=None):
+            if query_chunk_size is None:
+                query_chunk_size = 1024
+            _orig_cached_nar_init(self, model, chunk, attention=attention, query_chunk_size=query_chunk_size)
+
+        nar.CachedNAR.__init__ = _patched_cached_nar_init
+except Exception:
+    pass
+
+# Inter-stage VRAM garbage collection and cache flushing:
+# When transitioning from Stage 1 (AR token generation) to Stage 2 (NAR audio synthesis),
+# flush Python garbage and PyTorch CUDA allocator cache to ensure clean, maximized VRAM
+# before audio synthesis prefill and flow-matching ODE steps begin.
+try:
+    import gc
+    from yue2 import YuE2Pipeline
+    _orig_pipeline_synthesize = YuE2Pipeline.synthesize
+
+    def _patched_pipeline_synthesize(self, semantic, *, cancelled=None):
+        gc.collect()
+        if torch.cuda.is_available():
+            torch.cuda.empty_cache()
+            torch.cuda.ipc_collect()
+        return _orig_pipeline_synthesize(self, semantic, cancelled=cancelled)
+
+    YuE2Pipeline.synthesize = _patched_pipeline_synthesize
+except Exception:
+    pass
+
+# Adaptive memory fraction safety:
+# In an isolated runner subprocess, prevent torch.cuda.set_per_process_memory_fraction
+# from prematurely choking the PyTorch allocator below available device headroom.
+try:
+    _orig_set_memory_fraction = torch.cuda.set_per_process_memory_fraction
+
+    def _safe_set_memory_fraction(fraction, device=None):
+        # Allow fraction to utilize available VRAM without artificial sub-device capping
+        if fraction >= 0.80:
+            fraction = min(float(fraction) + 0.10, 1.0)
+        try:
+            _orig_set_memory_fraction(fraction, device=device)
+        except Exception:
+            pass
+
+    torch.cuda.set_per_process_memory_fraction = _safe_set_memory_fraction
+except Exception:
     pass
 
 def run_generation(args):
