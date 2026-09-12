@@ -1,7 +1,7 @@
 [project]
 name = "yue2"
 description = "Professional neural music generation suite for ComfyUI powered by YuE2 and LLM Studio"
-version = "1.2.0"
+version = "1.2.5"
 license = { file = "LICENSE" }
 dependencies = [
     "soundfile>=0.12.1",

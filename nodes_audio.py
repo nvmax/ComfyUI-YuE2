@@ -72,17 +72,18 @@ class YuE2AudioSavePreview:
             full_path = os.path.join(full_output_folder, file_name)
 
             if format.lower() == "mp3":
-                import torchaudio, warnings
-                br_map = {"320k": 320000, "256k": 256000, "192k": 192000, "128k": 128000}
-                comp = br_map.get(str(mp3_bitrate).lower(), 320000)
-                track_tensor = waveform[b].detach().cpu().float()
-                if track_tensor.ndim == 1:
-                    track_tensor = track_tensor.unsqueeze(0).repeat(2, 1)
-                elif track_tensor.shape[0] == 1:
-                    track_tensor = track_tensor.repeat(2, 1)
-                with warnings.catch_warnings():
-                    warnings.filterwarnings("ignore")
-                    torchaudio.save(full_path, track_tensor, sample_rate, backend="soundfile", compression=comp)
+                try:
+                    sf.write(full_path, audio_track, sample_rate, format="MP3")
+                except Exception:
+                    import torchaudio, warnings
+                    track_tensor = waveform[b].detach().cpu().float()
+                    if track_tensor.ndim == 1:
+                        track_tensor = track_tensor.unsqueeze(0).repeat(2, 1)
+                    elif track_tensor.shape[0] == 1:
+                        track_tensor = track_tensor.repeat(2, 1)
+                    with warnings.catch_warnings():
+                        warnings.filterwarnings("ignore")
+                        torchaudio.save(full_path, track_tensor, sample_rate)
             else:
                 # Choose subtype based on format and bit depth
                 subtype = None
