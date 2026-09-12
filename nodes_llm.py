@@ -338,9 +338,9 @@ def ensure_tempo_tag(lyrics: str, bpm: int) -> str:
         return lyrics
     lines = lyrics.splitlines()
     insert_idx = 0
-    for i, line in enumerate(lines[:6]):
+    for i, line in enumerate(lines[:8]):
         s = line.strip().lower()
-        if s.startswith("[voice:") or s.startswith("[range:") or s.startswith("[instrumental intro") or s.startswith("[ambient nature") or s.startswith("[intro"):
+        if s.startswith("[voice:") or s.startswith("[range:") or s.startswith("[instrumental intro") or s.startswith("[ambient nature") or s.startswith("[intro") or s.startswith("[start:") or s.startswith("[cold start"):
             insert_idx = i + 1
     tempo_line = f"[Tempo: {bpm} BPM]"
     lines.insert(insert_idx, tempo_line)

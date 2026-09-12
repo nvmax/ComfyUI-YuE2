@@ -135,11 +135,46 @@ VOCAL_TO_VOICE_TAG = {
     "None / Pure Instrumental": ""
 }
 
+INTRO_STYLES = [
+    "Instrumental Intro",
+    "Vamp / Groove Intro",
+    "Vocal/Lyrical Hook Intro",
+    "Vocal / Lyrical Hook Intro",
+    "Turnaround Intro",
+    "Stand-Alone Instrumental",
+    'The "Cold Start" (No Intro / Attacca)',
+    "Acapella Intro",
+    "Drone / Ambient Pad Intro",
+    "Solo Instrument Feature",
+    "Drum / Percussion Groove",
+    "Count-In / Dialogue Intro",
+    "SFX / Found Sound Intro",
+    "Modulating Intro",
+    "Crescendo / Fade-In Intro",
+    "Ambient Nature Intro",
+    "Immediate Vocal Entry (No Intro)",
+    "None",
+]
+
 INTRO_MAP = {
-    "Instrumental Intro": "[Instrumental Intro]",
-    "Ambient Nature Intro": "[Ambient Nature Intro]",
+    "Instrumental Intro": "[Instrumental Intro: Full band groove and melodic riff establishing the song's energy] [Energy: Medium]",
+    "Vamp / Groove Intro": "[Instrumental Intro: Repeating 1-2 bar rhythmic groove pattern and harmonic vamp before vocal entry] [Energy: Medium]",
+    "Vocal/Lyrical Hook Intro": "[Intro - Acapella Vocal Hook: Melodic preview of the chorus hook before first verse] [Energy: Medium]",
+    "Vocal / Lyrical Hook Intro": "[Intro - Acapella Vocal Hook: Melodic preview of the chorus hook before first verse] [Energy: Medium]",
+    "Turnaround Intro": "[Instrumental Intro: Harmonic turnaround chord progression resolving to the home key] [Energy: Medium]",
+    "Stand-Alone Instrumental": "[Instrumental Intro: Composed melodic theme and signature riff not repeated in the verses] [Energy: Medium-High]",
+    'The "Cold Start" (No Intro / Attacca)': "[Start: Cold Start / Attacca - Immediate Vocal Entry on Beat 1] [No Intro]",
+    "Acapella Intro": "[Intro - Acapella: Lead vocals enter solo with no instrumental accompaniment] [Energy: Low-Medium]",
+    "Drone / Ambient Pad Intro": "[Intro - Drone on Root Chord: Sustained synthesizer pad and ambient resonance before rhythm section drops] [Energy: Low]",
+    "Solo Instrument Feature": "[Intro - Solo Instrument: Intimate solo instrument lead-in before the full band joins] [Energy: Low-Medium]",
+    "Drum / Percussion Groove": "[Intro - Drum Groove: Tight drum beat and percussion groove (4 bars) establishing tempo before harmonic entrance] [Energy: Medium]",
+    "Count-In / Dialogue Intro": '[Intro - Studio Count-In: [Spoken: "One, two, ready, go"] into immediate band entrance] [Energy: Medium-High]',
+    "SFX / Found Sound Intro": "[Intro - SFX: Non-musical audio effects, rain, atmosphere, and vinyl crackle setting cinematic mood] [Energy: Low]",
+    "Modulating Intro": "[Intro - Modulating Progression: Harmonic tension progression deliberately resolving into the tonic key as the verse begins] [Energy: Medium]",
+    "Crescendo / Fade-In Intro": "[Intro - Crescendo / Fade-In: Instrumentation and rhythmic layers gradually building from silence to full volume] [Energy: Building]",
+    "Ambient Nature Intro": "[Ambient Nature Intro: Subtle outdoor atmospheric noise and gentle musical layers] [Energy: Low]",
     "Immediate Vocal Entry (No Intro)": "[Start: Immediate Vocal Entry] [No Intro]",
-    "None": ""
+    "None": "",
 }
 
 def get_section_tags_for_genre(base_sec: str, genre_preset: str) -> tuple:
@@ -355,7 +390,7 @@ class YuE2StyleAndLyricsStudio:
                 "genre_preset": (GENRE_PRESETS, {"default": "Pop / Dance Pop"}),
                 "vocal_profile": (VOCAL_PROFILES, {"default": "Bright Soaring Tenor (Male)"}),
                 "bpm": ("INT", {"default": 102, "min": 0, "max": 240, "step": 1}),
-                "intro_style": (list(INTRO_MAP.keys()), {"default": "Instrumental Intro"}),
+                "intro_style": (INTRO_STYLES, {"default": "Instrumental Intro"}),
                 "custom_style": ("STRING", {
                     "multiline": True,
                     "default": "",
@@ -483,8 +518,10 @@ class YuE2StyleAndLyricsStudio:
 
         if voice_tag and "[voice:" not in raw_lyrics:
             header_lines.append(voice_tag)
-        if intro_tag and "[Instrumental Intro" not in raw_lyrics and "[Ambient Nature" not in raw_lyrics and "[No Intro" not in raw_lyrics:
-            header_lines.append(intro_tag)
+        if intro_tag:
+            has_existing_intro = bool(re.search(r"\[(?:Instrumental\s+)?Intro\b|\[Ambient\s+Nature\b|\[No\s+Intro\b|\[Start:\s*|\[Cold\s+Start\b", raw_lyrics[:500], re.IGNORECASE))
+            if not has_existing_intro:
+                header_lines.append(intro_tag)
         if bpm > 0 and "[Tempo:" not in raw_lyrics:
             header_lines.append(f"[Tempo: {bpm} BPM]")
 

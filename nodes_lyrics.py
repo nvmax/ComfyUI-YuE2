@@ -1,5 +1,12 @@
 """YuE2 Lyrics Studio Node for ComfyUI."""
 
+import re
+
+try:
+    from .nodes_style import INTRO_STYLES, INTRO_MAP
+except ImportError:
+    from nodes_style import INTRO_STYLES, INTRO_MAP
+
 VOICE_TAXONOMY = [
     "None",
     "High Male Tenor [C3-C5]",
@@ -24,19 +31,7 @@ VOICE_TAGS = {
     "None": ""
 }
 
-INTRO_TAGS = [
-    "None",
-    "Instrumental Intro",
-    "Ambient Nature Intro",
-    "Immediate Vocal Entry (No Intro)"
-]
-
-INTRO_MAP = {
-    "Instrumental Intro": "[Instrumental Intro]",
-    "Ambient Nature Intro": "[Ambient Nature Intro]",
-    "Immediate Vocal Entry (No Intro)": "[Start: Immediate Vocal Entry] [No Intro]",
-    "None": ""
-}
+INTRO_TAGS = INTRO_STYLES
 
 class YuE2LyricsStudio:
     """Provides structured lyric editing and formatting for YuE2."""
@@ -71,8 +66,10 @@ class YuE2LyricsStudio:
             lines.append(v_tag)
 
         i_tag = INTRO_MAP.get(intro_style, "")
-        if i_tag and "[Instrumental Intro" not in lyrics and "[Ambient Nature" not in lyrics and "[No Intro" not in lyrics:
-            lines.append(i_tag)
+        if i_tag:
+            has_existing_intro = bool(re.search(r"\[(?:Instrumental\s+)?Intro\b|\[Ambient\s+Nature\b|\[No\s+Intro\b|\[Start:\s*|\[Cold\s+Start\b", lyrics[:500], re.IGNORECASE))
+            if not has_existing_intro:
+                lines.append(i_tag)
 
         if tempo_bpm > 0 and "[Tempo:" not in lyrics:
             lines.append(f"[Tempo: {tempo_bpm} BPM]")
