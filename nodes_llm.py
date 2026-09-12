@@ -265,11 +265,114 @@ PROVIDER_MODELS = {
     ],
 }
 
-ALL_MODELS = []
-for p in PROVIDERS:
-    for m in PROVIDER_MODELS.get(p, []):
-        if m not in ALL_MODELS:
-            ALL_MODELS.append(m)
+def fetch_models_for_provider(provider: str, base_url: str = "", api_key: str = "") -> tuple:
+    """Dynamically fetches models for a given provider, prioritizing live endpoints when reachable."""
+    p = str(provider or "LMStudio").strip()
+    p_lower = p.lower()
+
+    if p_lower == "lmstudio":
+        url = resolve_base_url("LMStudio", base_url).rstrip("/")
+        endpoint = f"{url}/models"
+        try:
+            req = urllib.request.Request(endpoint, headers={"User-Agent": "YuE2-Studio"})
+            with urllib.request.urlopen(req, timeout=2.0) as resp:
+                data = json.loads(resp.read().decode("utf-8"))
+                models = [m.get("id") for m in data.get("data", []) if m.get("id")]
+                if models:
+                    chat_models = [m for m in models if "embed" not in m.lower()]
+                    embed_models = [m for m in models if "embed" in m.lower()]
+                    return (chat_models + embed_models, True)
+        except Exception:
+            pass
+        return (list(PROVIDER_MODELS.get("LMStudio", ["gemma-4-e4b-it"])), False)
+
+    elif p_lower == "ollama":
+        url = resolve_base_url("Ollama", base_url).rstrip("/")
+        try:
+            req = urllib.request.Request(f"{url}/api/tags", headers={"User-Agent": "YuE2-Studio"})
+            with urllib.request.urlopen(req, timeout=2.0) as resp:
+                data = json.loads(resp.read().decode("utf-8"))
+                models = [m.get("name") for m in data.get("models", []) if m.get("name")]
+                if models:
+                    return (models, True)
+        except Exception:
+            pass
+        try:
+            req = urllib.request.Request(f"{url}/v1/models", headers={"User-Agent": "YuE2-Studio"})
+            with urllib.request.urlopen(req, timeout=2.0) as resp:
+                data = json.loads(resp.read().decode("utf-8"))
+                models = [m.get("id") for m in data.get("data", []) if m.get("id")]
+                if models:
+                    return (models, True)
+        except Exception:
+            pass
+        return (list(PROVIDER_MODELS.get("Ollama", ["qwen2.5:7b"])), False)
+
+    elif p_lower in ("openai", "openrouter", "deepseek", "grok"):
+        effective_key = resolve_api_key(p, api_key)
+        if effective_key:
+            url = resolve_base_url(p, base_url).rstrip("/")
+            try:
+                req = urllib.request.Request(f"{url}/models", headers={
+                    "Authorization": f"Bearer {effective_key}",
+                    "User-Agent": "YuE2-Studio"
+                })
+                with urllib.request.urlopen(req, timeout=2.5) as resp:
+                    data = json.loads(resp.read().decode("utf-8"))
+                    models = [m.get("id") for m in data.get("data", []) if m.get("id")]
+                    if models:
+                        if p_lower == "openai":
+                            filtered = [m for m in models if any(k in m.lower() for k in ["gpt", "o1", "o3", "o4"])]
+                            if filtered:
+                                return (filtered, True)
+                        return (models, True)
+            except Exception:
+                pass
+
+    # For Anthropic, Google, or offline fallbacks:
+    for k, v in PROVIDER_MODELS.items():
+        if k.lower() == p_lower:
+            return (list(v), False)
+
+    return (list(PROVIDER_MODELS.get("LMStudio", ["gemma-4-e4b-it"])), False)
+
+def get_initial_models() -> list:
+    """Returns the initial models list on startup (checks live LM Studio or default LM Studio models)."""
+    models, _ = fetch_models_for_provider("LMStudio")
+    return models if models else ["gemma-4-e4b-it"]
+
+def init_server_routes():
+    """Registers ComfyUI API endpoint /yue2/models to dynamically serve provider-specific models to the frontend."""
+    try:
+        from server import PromptServer
+        from aiohttp import web
+
+        if not hasattr(PromptServer, "instance") or PromptServer.instance is None:
+            return
+
+        server_instance = PromptServer.instance
+
+        async def api_get_yue2_models(request):
+            provider = request.rel_url.query.get("provider", "LMStudio")
+            base_url = request.rel_url.query.get("base_url", "")
+            api_key = request.rel_url.query.get("api_key", "")
+            models, is_live = fetch_models_for_provider(provider, base_url, api_key)
+            return web.json_response({"provider": provider, "models": models, "live": is_live})
+
+        if hasattr(server_instance, "routes"):
+            existing_paths = [r.path for r in server_instance.routes if hasattr(r, "path")]
+            if "/yue2/models" not in existing_paths:
+                server_instance.routes.get("/yue2/models")(api_get_yue2_models)
+
+        if hasattr(server_instance, "app") and server_instance.app is not None:
+            try:
+                server_instance.app.router.add_get("/yue2/models", api_get_yue2_models)
+            except Exception:
+                pass
+    except Exception as e:
+        print(f"[YuE2] Notice: Could not register /yue2/models route: {e}")
+
+init_server_routes()
 
 def resolve_api_key(provider: str, api_key: str) -> str:
     key = str(api_key or "").strip()
@@ -304,17 +407,15 @@ def resolve_model(provider: str, selected_model: str, custom_model: str) -> str:
     cust = str(custom_model or "").strip()
     if cust:
         return cust
+    sel = str(selected_model or "").strip()
+    if sel:
+        return sel
     prov_key = None
     for k in PROVIDERS:
         if k.lower() == provider.lower():
             prov_key = k
             break
-    if not prov_key:
-        return selected_model or "gpt-4o"
-    allowed = PROVIDER_MODELS.get(prov_key, [])
-    if selected_model in allowed:
-        return selected_model
-    return DEFAULT_MODELS.get(prov_key, allowed[0] if allowed else selected_model)
+    return DEFAULT_MODELS.get(prov_key or provider, "gemma-4-e4b-it")
 
 
 def resolve_bpm(bpm, style_context: str = "", input_text: str = "") -> int:
@@ -611,6 +712,8 @@ class YuE2LLMProducer:
 
     @classmethod
     def INPUT_TYPES(cls):
+        init_models = get_initial_models()
+        def_model = init_models[0] if init_models else "gemma-4-e4b-it"
         return {
             "required": {
                 "action": (ACTIONS, {"default": "Polish & Arrange Lyrics"}),
@@ -620,7 +723,7 @@ class YuE2LLMProducer:
                     "default": "A high-energy synth-pop song about escaping into the night",
                     "placeholder": "Enter lyrics to polish OR enter a song concept/theme"
                 }),
-                "model": (ALL_MODELS, {"default": "gemma-4-e4b-it"}),
+                "model": (init_models, {"default": def_model}),
             },
             "optional": {
                 "api_key": ("STRING", {
