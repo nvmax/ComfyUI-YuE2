@@ -415,11 +415,44 @@ I'm finally home in the light of your grace
 - {BRACES} = Harmonies & backup layers: {layered vocals: 'word'}, {backup vocals: 'word'}, {harmony: 'word'}.
 - Separate every section with an empty line. Never bunch lines into a wall of text.
 
-4. OUTRO & LANDING:
-- [OUTRO - REVERB TAIL FADE OUT, long decay, spacious hall reverb, fading echoes] [Energy: Decrescendo]
-- (Slowing it down... softly)
-- (For the one I love... fading)
-- [End] (Must ALWAYS be on its own line)
+4. DYNAMIC OUTRO & LANDING ARCHITECTURE:
+Never copy a single rigid ending formula. Infer the ideal outro style and energy from the user's genre, tempo, instruments, and emotional mood (selected in previous nodes and prompt context) so the ending hits with authentic musical impact.
+Examples:
+Outro Archetypes & Illustrative Examples (Use these as conceptual guides, NOT verbatim copy):
+- High-Energy / Sudden Stop (Rock, Metal, Punk, Hard Trap, Punchy Pop):
+  [Outro - Full Band]
+  [Final heavy power chord crash + sudden cut, short drum ring] [Energy: Maximum / Sudden Cut]
+  (Decisive final hook line or belted shout)
+  [End]
+
+- Atmospheric Reverb / Ambient Fade (Ballad, Dream Pop, Ambient, Chillout, Slow R&B):
+  [Outro - Lead Vocal]
+  [Spacious hall reverb tail, intimate piano or acoustic guitar decay, fading echoes] [Energy: Decrescendo]
+  (Thematic hook motif or whisper softly echoing... fading into silence)
+  [End]
+
+- Electronic / Synth Decay / Filter Sweep (Synthwave, EDM, Electro-Pop, House):
+  [Outro]
+  [Low-pass filter sweep closing down, arpeggiated synths fading into white noise wash] [Energy: Decrescendo]
+  (Stuttered vocal echo: 'fade... fade...')
+  [End]
+
+- Rhythmic Groove Decay / Tape Stop (Hip-Hop, Boom Bap, Trap, Funk):
+  [Outro]
+  [808 sub-bass glides out, vinyl crackle and turntable tape stop effect] [Energy: Low]
+  (Spoken outro ad-lib / sign-off)
+  [End]
+
+- Organic Acoustic Landing (Country, Folk, Singer-Songwriter, Americana):
+  [Outro - Acoustic Guitar & Fiddle]
+  [Single sustained acoustic chord ring out, gentle room resonance decay into silence] [Energy: Low]
+  (Soft melodic hum or final sigh)
+  [End]
+
+Outro Rules:
+- Contextual Relevance: Any sung ad-libs or fading words in the outro MUST be thematic callbacks or original ad-libs belonging to THIS specific song. NEVER output generic, clichéd placeholder lyrics or unrelated love ballad filler into other genres! If no vocals fit, use an instrumental outro.
+- Precision Landing: Match the instrumentation and energy tag ([Energy: Decrescendo], [Energy: Sudden Cut], [Energy: Low], [Energy: Maximum]) to the genre and narrative resolution.
+- Mandatory Ending Tag: The performance script must ALWAYS conclude with [End] on its own separate line.
 
 ══ OUTPUT FORMAT ══
 Output ONLY the raw content of the technical lyrics script. ZERO Markdown formatting (no **, no ###, no backticks)."""
@@ -468,11 +501,45 @@ I'm finally home in the light of your grace
 - Always use single quotes (') inside braces and brackets so JSON remains valid.
 - Separate every section with an empty line. Never bunch lines into a wall of text.
 
-4. OUTRO & LANDING:
-- [OUTRO - REVERB TAIL FADE OUT, long decay, spacious hall reverb, fading echoes] [Energy: Decrescendo]
-- (Slowing it down... softly)
-- (For the one I love... fading)
-- [End] (Must ALWAYS be on its own line)
+4. DYNAMIC OUTRO & LANDING ARCHITECTURE:
+Never copy a single rigid ending formula. Infer the ideal outro style and energy from the user's genre, tempo, instruments, and emotional mood (selected in previous nodes and prompt context) so the ending hits with authentic musical impact.
+
+Examples:
+Outro Archetypes & Illustrative Examples (Use these as conceptual guides, NOT verbatim copy):
+- High-Energy / Sudden Stop (Rock, Metal, Punk, Hard Trap, Punchy Pop):
+  [Outro - Full Band]
+  [Final heavy power chord crash + sudden cut, short drum ring] [Energy: Maximum / Sudden Cut]
+  (Decisive final hook line or belted shout)
+  [End]
+
+- Atmospheric Reverb / Ambient Fade (Ballad, Dream Pop, Ambient, Chillout, Slow R&B):
+  [Outro - Lead Vocal]
+  [Spacious hall reverb tail, intimate piano or acoustic guitar decay, fading echoes] [Energy: Decrescendo]
+  (Thematic hook motif or whisper softly echoing... fading into silence)
+  [End]
+
+- Electronic / Synth Decay / Filter Sweep (Synthwave, EDM, Electro-Pop, House):
+  [Outro]
+  [Low-pass filter sweep closing down, arpeggiated synths fading into white noise wash] [Energy: Decrescendo]
+  (Stuttered vocal echo: 'fade... fade...')
+  [End]
+
+- Rhythmic Groove Decay / Tape Stop (Hip-Hop, Boom Bap, Trap, Funk):
+  [Outro]
+  [808 sub-bass glides out, vinyl crackle and turntable tape stop effect] [Energy: Low]
+  (Spoken outro ad-lib / sign-off)
+  [End]
+
+- Organic Acoustic Landing (Country, Folk, Singer-Songwriter, Americana):
+  [Outro - Acoustic Guitar & Fiddle]
+  [Single sustained acoustic chord ring out, gentle room resonance decay into silence] [Energy: Low]
+  (Soft melodic hum or final sigh)
+  [End]
+
+Outro Rules:
+- Contextual Relevance: Any sung ad-libs or fading words in the outro MUST be thematic callbacks or original ad-libs belonging to THIS specific song. NEVER output generic, clichéd placeholder lyrics or unrelated love ballad filler into other genres! If no vocals fit, use an instrumental outro.
+- Precision Landing: Match the instrumentation and energy tag ([Energy: Decrescendo], [Energy: Sudden Cut], [Energy: Low], [Energy: Maximum]) to the genre and narrative resolution.
+- Mandatory Ending Tag: The performance script must ALWAYS conclude with [End] on its own separate line.
 
 5. VERBATIM PRESERVATION:
 If user lyrics are provided in the input, you MUST preserve all existing sung words 100% VERBATIM! Keep their exact words and architect the rich structural headers, sub-tags, and cues around them.
@@ -632,7 +699,8 @@ class YuE2LLMProducer:
             user_msg = (
                 f"Target Music Style: {style_context or 'Modern Melodic'}\n"
                 f"Target Tempo: {effective_bpm} BPM\n\n"
-                f"Lyrics to polish and arrange (keep all sung lyrics 100% verbatim):\n{raw_input_text}"
+                f"Lyrics to polish and arrange (keep all sung lyrics 100% verbatim):\n{raw_input_text}\n\n"
+                f"Outro & Ending Guidance: Infer the most fitting musical outro and landing based on the genre ({style_context or 'Modern Melodic'}), tempo ({effective_bpm} BPM), and emotional arc (e.g. sudden hard stop, energetic hit, rhythmic breakdown, acoustic landing, or atmospheric fade). Do NOT output generic boilerplate. Conclude with [End] on its own line."
             )
             resp_text = self._query_llm(provider_name, final_model, get_polish_sys_prompt(), user_msg, final_base_url, final_api_key, temperature, max_tokens)
             clean_lyrics = extract_clean_lyrics(resp_text)
@@ -656,14 +724,15 @@ class YuE2LLMProducer:
                     f"Preferred genre / style: {style_context or 'Pop / Dance Pop'}\n"
                     f"Target Tempo: {effective_bpm} BPM\n"
                     f"Language: English only\n\n"
-                    f"Instruction: Generate the complete song concept. Keep all user sung lyrics 100% verbatim, and architect rich technical sub-tags, dynamic cues, vocal assignments, and top-loaded anchors."
+                    f"Instruction: Generate the complete song concept. Keep all user sung lyrics 100% verbatim, and architect rich technical sub-tags, dynamic cues, vocal assignments, and top-loaded anchors. Tailor the outro dynamically to the song's genre, tempo ({effective_bpm} BPM), and mood. Conclude with [End] on its own line."
                 )
             else:
                 user_msg = (
                     f"Song concept / theme: {input_text}\n"
                     f"Preferred genre / style: {style_context or 'Pop / Dance Pop'}\n"
                     f"Target Tempo: {effective_bpm} BPM\n"
-                    f"Language: English only"
+                    f"Language: English only\n\n"
+                    f"Instruction: Generate the complete song concept with title, style string, and lyrics. Architect the outro dynamically to fit the genre, tempo ({effective_bpm} BPM), and mood. Conclude with [End] on its own line."
                 )
             resp_text = self._query_llm(provider_name, final_model, CONCEPT_SYS_PROMPT, user_msg, final_base_url, final_api_key, temperature, max_tokens)
             try:

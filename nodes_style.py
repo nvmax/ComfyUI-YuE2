@@ -312,10 +312,7 @@ def enrich_section_tags(lyrics_text: str, genre_preset: str) -> str:
             else:
                 energy_tag, delivery_tags = get_section_tags_for_genre(base_sec, genre_preset)
                 if energy_tag and delivery_tags:
-                    if base_sec.lower() == "outro":
-                        new_header = f"[OUTRO - REVERB TAIL FADE OUT, long decay, spacious hall reverb, fading echoes] [{energy_tag}]"
-                    else:
-                        new_header = f"[{base_sec}{persona}]\n{delivery_tags} [{energy_tag}]"
+                    new_header = f"[{base_sec}{persona}]\n{delivery_tags} [{energy_tag}]"
                     out_lines.append(new_header)
                 else:
                     out_lines.append(line)
