@@ -1,0 +1,298 @@
+{
+  "1": {
+    "inputs": {
+      "genre_preset": "Custom / Keep Only Lyrics",
+      "vocal_profile": "Warm Smooth Baritone (Male)",
+      "bpm": 120,
+      "intro_style": "None",
+      "custom_style": "Style of Bruno Mars song Risk It All",
+      "lyrics": "[Hook]\nI’m slowing it down for the one that I love\nLike the earth’s standing still while the stars crash above\n\n[Verse 1]\n[Soft piano only] [Intimate vocal]\nThe clock on the wall is a liar tonight\nSpinning too fast while we chase the light\nI’m holding your hand like a lifeline in June\nThe only thing quiet in a world out of tune\n\n[Chorus]\n[Chorus | Energy: Maximum] [Explosive vocal delivery] [Full band burst]\nOh, I’m slowing it down for the one that I love!\nLike the earth’s standing still while the stars crash above!\nIt’s a beautiful weight, it’s a terrifying grace\nI’m finally home in the light of your grace!\n(In your grace)\n\n[Verse 2]\n[Drums settle into a driving backbeat]\nWe used to be shadows just passing through doors\nBut I’m not a ghost on these hardwood floors\nEvery bridge that I burned was a lesson I learned\nTo wait for the peace that I’ve finally earned\n\n[Chorus]\n[Chorus | Energy: Maximum] [Anthemic energy]\nOh, I’m slowing it down for the one that I love!\nLike the earth’s standing still while the stars crash above!\nIt’s a beautiful weight, it’s a terrifying grace\nI’m finally home in the light of your grace!\n\n[Verse 3]\n[Building intensity] [Gritty piano chords]\nDon't let the sun rise, don't let it go cold\nI’ve found a story that never gets old\nThe seconds are dripping like honey and wine\nI’m finally yours, and I’m glad that you’re mine\n\n[Chorus]\n[Chorus | Energy: Maximum] [Maximum intensity] [Hard hitting drums]\nOh, I’m slowing it down for the one that I love!\nLike the earth’s standing still while the stars crash above!\nIt’s a beautiful weight, it’s a terrifying grace\nI’m finally home in the light of your grace!\n\n[Outro]\n[OUTRO - BIG FINAL HIT + HARD STOP, massive hall reverb tail]\n[Instrumental: Final sustained piano note]\nSlowing it down...\nFor the one I love...\n[Precision Landing: Instrumental: Single piano chord]\n[End]",
+      "custom_instruments": "",
+      "extra_tags": ""
+    },
+    "class_type": "YuE2StyleAndLyricsStudio",
+    "_meta": {
+      "title": "YuE2 Style and Lyrics Studio"
+    }
+  },
+  "3": {
+    "inputs": {
+      "action": "Generate Full Song Concept",
+      "provider": "LMStudio",
+      "input_text": [
+        "1",
+        1
+      ],
+      "model": "gemma-4-e4b-it",
+      "api_key": "",
+      "custom_model": "",
+      "base_url": "http://192.168.1.174:1234/v1",
+      "style_context": [
+        "1",
+        0
+      ],
+      "bpm": [
+        "1",
+        2
+      ],
+      "temperature": 1,
+      "max_tokens": 8192,
+      "cot_mode": "full"
+    },
+    "class_type": "YuE2LLMProducer",
+    "_meta": {
+      "title": "YuE2 LLM Co-Producer & Polisher"
+    }
+  },
+  "4": {
+    "inputs": {
+      "seed": 702965739866285
+    },
+    "class_type": "YuE2Seed",
+    "_meta": {
+      "title": "YuE2 Seed Generator"
+    }
+  },
+  "12": {
+    "inputs": {
+      "any_01": [
+        "1",
+        0
+      ],
+      "any_02": [
+        "3",
+        2
+      ]
+    },
+    "class_type": "Any Switch (rgthree)",
+    "_meta": {
+      "title": "Style Switch / Merger"
+    }
+  },
+  "13": {
+    "inputs": {
+      "any_01": [
+        "1",
+        1
+      ],
+      "any_02": [
+        "3",
+        0
+      ]
+    },
+    "class_type": "Any Switch (rgthree)",
+    "_meta": {
+      "title": "Lyrics Switch / Merger"
+    }
+  },
+  "14": {
+    "inputs": {
+      "text": [
+        "13",
+        0
+      ]
+    },
+    "class_type": "ShowText|pysssss",
+    "_meta": {
+      "title": "Output Lyrics"
+    }
+  },
+  "15": {
+    "inputs": {
+      "ckpt_name": "yue2_3b_bf16.safetensors"
+    },
+    "class_type": "CheckpointLoaderSimple",
+    "_meta": {
+      "title": "Load YuE2 Checkpoint"
+    }
+  },
+  "18": {
+    "inputs": {
+      "audio_encoder_name": "sheetsage2_bf16.safetensors"
+    },
+    "class_type": "AudioEncoderLoader",
+    "_meta": {
+      "title": "Load Audio Encoder (SheetSage2)"
+    }
+  },
+  "19": {
+    "inputs": {
+      "audio_encoder": [
+        "18",
+        0
+      ],
+      "audio": [
+        "20",
+        0
+      ],
+      "mode": "melody"
+    },
+    "class_type": "SheetSage2AudioToABC",
+    "_meta": {
+      "title": "SheetSage2 Audio to ABC (Cover Mode)"
+    }
+  },
+  "20": {
+    "inputs": {
+      "audio": "test_ref.wav",
+      "upload": null
+    },
+    "class_type": "LoadAudio",
+    "_meta": {
+      "title": "Load Reference Audio"
+    }
+  },
+  "21": {
+    "inputs": {
+      "source": [
+        "23",
+        0
+      ]
+    },
+    "class_type": "PreviewAny",
+    "_meta": {
+      "title": "Preview ABC Notation"
+    }
+  },
+  "23": {
+    "inputs": {
+      "clip": [
+        "15",
+        1
+      ],
+      "style": [
+        "12",
+        0
+      ],
+      "lyrics": [
+        "13",
+        0
+      ],
+      "seed": [
+        "4",
+        0
+      ],
+      "mode": "full",
+      "max_abc_tokens": 8192
+    },
+    "class_type": "YuE2GenerateABC",
+    "_meta": {
+      "title": "YuE2 Generate ABC"
+    }
+  },
+  "22": {
+    "inputs": {
+      "clip": [
+        "15",
+        1
+      ],
+      "style": [
+        "12",
+        0
+      ],
+      "lyrics": [
+        "13",
+        0
+      ],
+      "abc": [
+        "23",
+        0
+      ],
+      "seed": [
+        "4",
+        0
+      ],
+      "mode": "full",
+      "max_duration": 360,
+      "temperature": 1,
+      "top_p": 0.95,
+      "top_k": 100,
+      "repetition_penalty": 1.2
+    },
+    "class_type": "YuE2GenerateMusic",
+    "_meta": {
+      "title": "YuE2 Generate Music"
+    }
+  },
+  "5": {
+    "inputs": {
+      "seconds": [
+        "22",
+        1
+      ],
+      "batch_size": 1
+    },
+    "class_type": "EmptyYuE2LatentAudio",
+    "_meta": {
+      "title": "Empty YuE2 Latent Audio"
+    }
+  },
+  "8": {
+    "inputs": {
+      "model": [
+        "15",
+        0
+      ],
+      "positive": [
+        "22",
+        0
+      ],
+      "negative": [
+        "22",
+        0
+      ],
+      "latent_image": [
+        "5",
+        0
+      ],
+      "seed": [
+        "4",
+        0
+      ],
+      "steps": 32,
+      "cfg": 1,
+      "sampler_name": "dpm_2",
+      "scheduler": "sgm_uniform",
+      "denoise": 1
+    },
+    "class_type": "KSampler",
+    "_meta": {
+      "title": "KSampler (Fast YuE2 Diffusion)"
+    }
+  },
+  "17": {
+    "inputs": {
+      "samples": [
+        "8",
+        0
+      ],
+      "vae": [
+        "15",
+        2
+      ],
+      "tile_size": 1920,
+      "overlap": 128
+    },
+    "class_type": "VAEDecodeAudioTiled",
+    "_meta": {
+      "title": "VAE Decode Audio (Tiled)"
+    }
+  },
+  "6": {
+    "inputs": {
+      "audio": [
+        "17",
+        0
+      ],
+      "filename_prefix": "YuE2/studio_song",
+      "save_mode": "Save to Output",
+      "format": "mp3",
+      "mp3_bitrate": "320k",
+      "bit_depth": "PCM_24"
+    },
+    "class_type": "YuE2AudioSavePreview",
+    "_meta": {
+      "title": "YuE2 Audio Preview & Saver"
+    }
+  }
+}

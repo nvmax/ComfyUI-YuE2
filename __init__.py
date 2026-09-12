@@ -1,16 +1,7 @@
 """
-ComfyUI-YuE2: Advanced Neural Music Generation Suite for ComfyUI
-Integrating YuE2 (m-a-p) and LM Studio local LLM Producer.
+ComfyUI-YuE2: Advanced Neural Music Generation Suite for ComfyUI.
+High-Speed In-Process Native YuE2 Acceleration with LM Studio & Local LLM Co-Producer.
 """
-
-try:
-    import yue2
-except ImportError:
-    from .install import install
-    try:
-        install()
-    except Exception as e:
-        print(f"[ComfyUI-YuE2] Auto-install failed: {e}")
 
 from .nodes_style import YuE2StyleAndLyricsStudio, YuE2AcousticStyle
 from .nodes_lyrics import YuE2LyricsStudio
@@ -33,7 +24,7 @@ NODE_CLASS_MAPPINGS = {
 }
 
 NODE_DISPLAY_NAME_MAPPINGS = {
-    "YuE2SongGenerator": "YuE2 Neural Song Generator",
+    "YuE2SongGenerator": "YuE2 Neural Song Generator (Native)",
     "YuE2StyleAndLyricsStudio": "YuE2 Style and Lyrics Studio",
     "YuE2InspirationPresets": "YuE2 Quick Song Starters",
     "YuE2LLMProducer": "YuE2 LLM Co-Producer & Polisher",
