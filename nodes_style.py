@@ -31,7 +31,6 @@ VOCAL_MAP = {
 }
 
 GENRE_PRESETS = [
-    "Custom / Keep Typed Style",
     "Custom / Keep Only Lyrics",
     "Rock / Classic Rock",
     "Rock / Indie Rock",
@@ -69,7 +68,6 @@ GENRE_PRESETS = [
 ]
 
 GENRE_MAP = {
-    "Custom / Keep Typed Style": ("Custom Genre", "", ""),
     "Custom / Keep Only Lyrics": ("Custom Genre", "", ""),
     "Rock / Classic Rock": ("Classic Rock", "overdriven electric guitars, punchy Gibson Les Paul riffs, vintage Marshall stack, driving drum kit, warm bass guitar", "vintage 70s vinyl master, raw analog tape punch, anthemic room reverb"),
     "Rock / Indie Rock": ("Indie Rock", "jangly Fender Telecaster chords, fuzzy rhythm guitar, melodic bassline, tight energetic drum kit", "lo-fi indie room ambience, authentic garage rock vibe, dynamic energy"),
@@ -311,7 +309,7 @@ def get_section_tags_for_genre(base_sec: str, genre_preset: str) -> tuple:
 
 def enrich_section_tags(lyrics_text: str, genre_preset: str) -> str:
     """Enhances bare section headers with dynamic energy, vocal delivery, and instrumental sub-tags while keeping lyric lines 100% untouched."""
-    if not lyrics_text or genre_preset in ("Custom / Keep Typed Style", "Custom / Keep Only Lyrics"):
+    if not lyrics_text:
         return lyrics_text
 
     lines = lyrics_text.splitlines()
@@ -394,7 +392,7 @@ class YuE2StyleAndLyricsStudio:
                 "custom_style": ("STRING", {
                     "multiline": True,
                     "default": "",
-                    "placeholder": "When 'Custom / Keep Typed Style' or 'Custom / Keep Only Lyrics' is selected, this exact text is preserved"
+                    "placeholder": "When 'Custom / Keep Only Lyrics' is selected, this exact text is preserved"
                 }),
                 "lyrics": ("STRING", {
                     "multiline": True,
@@ -441,7 +439,7 @@ class YuE2StyleAndLyricsStudio:
         custom_inst_str = str(custom_instruments or "").strip()
         custom_aest_str = str(kwargs.get("custom_aesthetic", "") or "").strip()
 
-        if genre_preset in ("Custom / Keep Typed Style", "Custom / Keep Only Lyrics"):
+        if genre_preset == "Custom / Keep Only Lyrics":
             raw_text = custom_style_str or extra_tags_str or "melodic music"
             clean_text = re.sub(r"^(?:Korean|Japanese|Mandarin)\s*,?", "", raw_text, flags=re.IGNORECASE).strip(", ")
 
