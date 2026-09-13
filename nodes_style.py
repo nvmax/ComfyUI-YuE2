@@ -518,7 +518,7 @@ class YuE2StyleAndLyricsStudio:
                 formatted_lyrics = formatted_lyrics.rstrip() + "\n\n[End]"
             return (style_str, formatted_lyrics, bpm)
 
-        # Enrich section headers with dynamic energy, vocal, and instrumental sub-tags (unless Custom / Keep Typed Style)
+        # Enrich section headers with dynamic energy, vocal, and instrumental sub-tags
         raw_lyrics = enrich_section_tags(raw_lyrics, genre_preset)
 
         if voice_tag and "[voice:" not in raw_lyrics:
