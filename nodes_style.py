@@ -175,10 +175,10 @@ INTRO_MAP = {
     "None": "",
 }
 
-def get_section_tags_for_genre(base_sec: str, genre_preset: str) -> tuple:
+def get_section_tags_for_genre(base_sec: str, genre_preset: str, custom_style: str = "") -> tuple:
     """Returns (energy_tag, delivery_and_inst_tags) for a given section and genre."""
     sec_lower = base_sec.lower().strip()
-    genre_lower = genre_preset.lower().strip()
+    genre_lower = f"{genre_preset} {custom_style}".lower().strip()
 
     is_v1 = "verse 1" in sec_lower or sec_lower == "verse"
     is_v2 = "verse 2" in sec_lower
@@ -307,7 +307,7 @@ def get_section_tags_for_genre(base_sec: str, genre_preset: str) -> tuple:
 
     return ("", "")
 
-def enrich_section_tags(lyrics_text: str, genre_preset: str) -> str:
+def enrich_section_tags(lyrics_text: str, genre_preset: str, custom_style: str = "") -> str:
     """Enhances bare section headers with dynamic energy, vocal delivery, and instrumental sub-tags while keeping lyric lines 100% untouched."""
     if not lyrics_text:
         return lyrics_text
@@ -343,7 +343,7 @@ def enrich_section_tags(lyrics_text: str, genre_preset: str) -> str:
             if already_tagged:
                 out_lines.append(line)
             else:
-                energy_tag, delivery_tags = get_section_tags_for_genre(base_sec, genre_preset)
+                energy_tag, delivery_tags = get_section_tags_for_genre(base_sec, genre_preset, custom_style)
                 if energy_tag and delivery_tags:
                     new_header = f"[{base_sec}{persona}]\n{delivery_tags} [{energy_tag}]"
                     out_lines.append(new_header)
@@ -511,15 +511,8 @@ class YuE2StyleAndLyricsStudio:
         else:
             raw_lyrics = str(lyrics).strip() if lyrics else ""
 
-        # Custom / Keep Only Lyrics preserves user lyrics completely untouched
-        if genre_preset == "Custom / Keep Only Lyrics":
-            formatted_lyrics = raw_lyrics or "[Instrumental Section]"
-            if not formatted_lyrics.rstrip().endswith("[End]"):
-                formatted_lyrics = formatted_lyrics.rstrip() + "\n\n[End]"
-            return (style_str, formatted_lyrics, bpm)
-
-        # Enrich section headers with dynamic energy, vocal, and instrumental sub-tags
-        raw_lyrics = enrich_section_tags(raw_lyrics, genre_preset)
+        # Enrich section headers with dynamic energy, vocal, and instrumental sub-tags (including Custom / Keep Only Lyrics)
+        raw_lyrics = enrich_section_tags(raw_lyrics, genre_preset, custom_style=custom_style_str)
 
         if voice_tag and "[voice:" not in raw_lyrics:
             header_lines.append(voice_tag)

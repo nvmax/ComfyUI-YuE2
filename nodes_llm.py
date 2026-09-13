@@ -803,23 +803,17 @@ class YuE2LLMProducer:
 
         print(f"\n[YuE2 AI Producer] Provider: {provider_name} | Model: {final_model} | Action: {action} | BPM: {effective_bpm}")
 
-        # Custom / Keep Only Lyrics preserves user lyrics completely untouched without LLM rewriting
-        if "Keep Only Lyrics" in str(style_context):
-            raw_input_text = format_lyrics_payload(input_text).strip()
-            if not raw_input_text.rstrip().endswith("[End]"):
-                clean_lyrics = raw_input_text.rstrip() + "\n\n[End]"
-            else:
-                clean_lyrics = raw_input_text
-            style_str = enforce_english_style(style_context)
-            return (clean_lyrics, style_str, "Custom Track", 42, effective_bpm)
+        # Custom / Keep Only Lyrics: enhance verses and sections based on acoustic direction while keeping lyrics 100% verbatim
+        clean_style_desc = re.sub(r"Custom\s*/\s*Keep Only Lyrics,?\s*", "", str(style_context or ""), flags=re.IGNORECASE).strip(", ")
+        target_style_desc = clean_style_desc or "Dynamic musical arrangement" 
 
         if action == "Polish & Arrange Lyrics":
             raw_input_text = format_lyrics_payload(input_text)
             user_msg = (
-                f"Target Music Style: {style_context or 'Modern Melodic'}\n"
+                f"Target Music Style & Acoustic Direction: {target_style_desc}\n"
                 f"Target Tempo: {effective_bpm} BPM\n\n"
                 f"Lyrics to polish and arrange (keep all sung lyrics 100% verbatim):\n{raw_input_text}\n\n"
-                f"Outro & Ending Guidance: Infer the most fitting musical outro and landing based on the genre ({style_context or 'Modern Melodic'}), tempo ({effective_bpm} BPM), and emotional arc (e.g. sudden hard stop, energetic hit, rhythmic breakdown, acoustic landing, or atmospheric fade). Do NOT output generic boilerplate. Conclude with [End] on its own line."
+                f"Instructions: Enhance the song verses, chorus, bridge, and sections with structural headers (e.g. [Verse 1 - ...], [Chorus - ...]) and rich sub-tags ([Instrumentation: ...], [Vocal: ...]) matching the acoustic direction ({target_style_desc}). KEEP ALL SUNG LYRICS 100% VERBATIM. DO NOT ALTER, REWRITE, DROP, OR TRANSLATE ANY WORDS. Infer the most fitting musical outro and landing based on the genre, tempo ({effective_bpm} BPM), and emotional arc. Conclude with [End] on its own line."
             )
             resp_text = self._query_llm(provider_name, final_model, get_polish_sys_prompt(), user_msg, final_base_url, final_api_key, temperature, max_tokens)
             clean_lyrics = extract_clean_lyrics(resp_text)
@@ -840,10 +834,10 @@ class YuE2LLMProducer:
             if has_existing_lyrics:
                 user_msg = (
                     f"User Lyrics to Arrange & Architect into Full Song Concept (KEEP ALL SUNG LYRICS 100% VERBATIM):\n{format_lyrics_payload(input_text)}\n\n"
-                    f"Preferred genre / style: {style_context or 'Pop / Dance Pop'}\n"
+                    f"Preferred genre / acoustic style: {target_style_desc}\n"
                     f"Target Tempo: {effective_bpm} BPM\n"
                     f"Language: Preserve user's original language (English, Danish, Spanish, etc.) - DO NOT translate\n\n"
-                    f"Instruction: Generate the complete song concept. Keep all user sung lyrics 100% verbatim, and architect rich technical sub-tags, dynamic cues, vocal assignments, and top-loaded anchors. Tailor the outro dynamically to the song's genre, tempo ({effective_bpm} BPM), and mood. Conclude with [End] on its own line."
+                    f"Instruction: Generate the complete song concept. Enhance the verses, chorus, bridge, and sections with structural headers and rich technical sub-tags ([Instrumentation: ...], [Vocal: ...]) matching the acoustic style ({target_style_desc}). Keep all user sung lyrics 100% verbatim. Tailor the outro dynamically to the song's genre, tempo ({effective_bpm} BPM), and mood. Conclude with [End] on its own line."
                 )
             else:
                 user_msg = (
